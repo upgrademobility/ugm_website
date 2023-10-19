@@ -3002,6 +3002,10 @@ input[type=range]::-moz-focus-outer {
     width: 50%;
   }
 
+  .sm\:w-40 {
+    width: 10rem;
+  }
+
   .sm\:w-auto {
     width: auto;
   }
