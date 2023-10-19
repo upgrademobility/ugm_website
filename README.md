@@ -1,4 +1,4 @@
-[![pages-build-deployment](https://github.com/upgrademobility/open-pro-html/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/upgrademobility/open-pro-html/actions/workflows/pages/pages-build-deployment)
+[![pages-build-deployment](https://github.com/upgrademobility/ugm_website/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/upgrademobility/ugm_website/actions/workflows/pages/pages-build-deployment)
 
 # UGM Website
 
