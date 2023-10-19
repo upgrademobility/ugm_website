@@ -3137,6 +3137,10 @@ input[type=range]::-moz-focus-outer {
     height: 5rem;
   }
 
+  .md\:h-24 {
+    height: 6rem;
+  }
+
   .md\:w-1\/2 {
     width: 50%;
   }
