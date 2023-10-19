@@ -13,9 +13,11 @@ KIT Colors: https://raw.githubusercontent.com/camminady/kitcolors/master/example
 * First, ensure that node.js & npm are both installed. If not, choose your OS and installation method from [this page](https://nodejs.org/en/download/package-manager/) and follow the instructions.
 * Next, use your command line to enter your project directory.
 * Ready-to-use package file is called `package.json`. You just need to run `npm install` to install all of the dependencies into your project.
-* When `npm` has finished with the install, run `npm run build` to recompile the `style.css` file in the root directory.
+* For this HTML version, you can simply open the index.html file for debugging
 
-Useful task for rapid development is `npm run dev`, which rebuild the CSS every time you make a change in the HML or JS files.
+Alternative:
+* When `npm` has finished with the install, run `npm run build` to recompile the `style.css` file in the root directory.
+* Useful task for rapid development is `npm run dev`, which rebuild the CSS every time you make a change in the HML or JS files.
 
 ### Development under WSL
 - Go to your user root (cd ~)
