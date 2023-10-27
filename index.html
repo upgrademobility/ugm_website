@@ -18,29 +18,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
-    (function($) {
-  $('a[href^=mailto]').each(function() {
-    var href = $(this).attr('href');
-    $(this).click(function() {
-      var t;
-      var self = $(this);
-
-      $(window).blur(function() {
-        // The browser apparently responded, so stop the timeout.
-        clearTimeout(t);
-      });
-
-      t = setTimeout(function() {
-        // The browser did not respond after 500ms, so open an alternative URL.
-        document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
-      }, 500);
-    });
-  });
-})(jQuery);
-</script>
 
 <body class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
 
@@ -1649,6 +1629,30 @@
     <script src="./js/vendors/aos.js"></script>
     <script src="./js/vendors/swiper-bundle.min.js"></script>
     <script src="./js/main.js"></script>
+    
+    <script>
+    (function($) {
+        $('a[href^=mailto]').each(function() {
+          var href = $(this).attr('href');
+          $(this).click(function() {
+            var t;
+            var self = $(this);
+      
+            $(window).blur(function() {
+              // The browser apparently responded, so stop the timeout.
+              clearTimeout(t);
+            });
+      
+            t = setTimeout(function() {
+              // The browser did not respond after 500ms, so open an alternative URL.
+              // document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
+              alert("No email client was detected. Please apply via upgrademobility@fast.kit.edu.");
+
+            }, 500);
+          });
+        });
+      })(jQuery);
+    </script>
 
 </body>
 
