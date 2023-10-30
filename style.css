@@ -2437,6 +2437,10 @@ input[type=range]::-moz-focus-outer {
   text-align: center;
 }
 
+.text-block {
+  text-align: justify;
+}
+
 .font-architects-daughter {
   font-family: "Architects Daughter", sans-serif;
 }
