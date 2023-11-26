@@ -1938,6 +1938,10 @@ input[type=range]::-moz-focus-outer {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -2435,6 +2439,10 @@ input[type=range]::-moz-focus-outer {
 
 .text-center {
   text-align: center;
+}
+
+.text-left {
+  text-align: start;
 }
 
 .text-block {
@@ -3220,6 +3228,10 @@ input[type=range]::-moz-focus-outer {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .md\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
@@ -3273,6 +3285,11 @@ input[type=range]::-moz-focus-outer {
   .md\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .md\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .md\:px-8 {
