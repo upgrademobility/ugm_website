@@ -19,8 +19,6 @@
     <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
@@ -1743,6 +1741,7 @@
     <script src="./js/vendors/alpinejs.min.js" defer></script>
     <script src="./js/vendors/aos.js"></script>
     <script src="./js/vendors/swiper-bundle.min.js"></script>
+    <script src="./js/vendors/jquery.min.js"></script>
     <script src="./js/main.js"></script>
 
     <script>
@@ -1759,11 +1758,11 @@
                         });
 
                         t = setTimeout(function () {
-                            // The browser did not respond after 500ms, so open an alternative URL.
+                            // The browser did not respond after 1000ms, so open an alternative URL.
                             // document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
                             alert("No email client was detected. Please apply via upgrademobility@fast.kit.edu.");
 
-                        }, 500);
+                        }, 1000);
                     });
                 });
             })(jQuery);
