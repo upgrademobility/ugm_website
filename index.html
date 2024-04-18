@@ -251,8 +251,11 @@
                                 Alpine.data('carousel', () => ({
                                     active: 0,
                                     autorotate: true,
-                                    autorotateTiming: 5000,
+                                    autorotateTiming: 2500,
                                     items: [
+                                        {
+                                            img: '2024-04-18-inner-5.jpg',
+                                        },
                                         {
                                             img: '2022-30-11-inner-1.jpg',
                                         },
@@ -263,10 +266,19 @@
                                             img: '2022-30-11-inner-3.jpg',
                                         },
                                         {
-                                            img: '2022-30-11-inner-4.jpg',
+                                            img: '2024-04-18-inner-1.jpg',
                                         },
                                         {
-                                            img: '2022-30-11-inner-5.jpg',
+                                            img: '2024-04-18-inner-2.jpg',
+                                        },
+                                        {
+                                            img: '2024-04-18-inner-3.jpg',
+                                        },
+                                        {
+                                            img: '2024-04-18-inner-4.jpg',
+                                        },
+                                        {
+                                            img: '2024-04-18-inner-6.jpg',
                                         },
 
                                     ],
@@ -1084,6 +1096,93 @@
                 <div class="carousel swiper-container">
                     <div class="swiper-wrapper">
                         <!-- Carousel items -->
+
+                        <!-- article -->
+                        <div class="swiper-slide h-auto flex flex-col max-w-[446px] group">
+                            <article class="flex flex-col h-full" data-aos="fade-up" data-aos-delay="200">
+                                <header>
+                                    <a class="block mb-6" href="./news/2024-04-11.html">
+                                        <figure class="relative h-0 pb-9/16 overflow-hidden rounded-sm">
+                                            <img class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
+                                                loading="lazy" src="./images/2024-04-11-preview.jpg" width="352"
+                                                height="198" alt="News 02" />
+                                        </figure>
+                                    </a>
+                                    <div class="mb-3">
+                                        <ul class="flex flex-wrap text-xs font-medium -m-1">
+                                            <li class="m-1">
+                                                <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-kitcyan-800 hover:bg-kitcyan-950 transition duration-150 ease-in-out"
+                                                    href="#0">Think Tank</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="h4 mb-2">
+                                        <a class="hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="./news/2024-04-11.html">Fireside Chat with Dr. Ulf Zillig</a>
+                                    </h3>
+                                </header>
+                                <p class="text-lg text-gray-400 grow">Dr. Ulf Zillig is the Vice President Group
+                                    Research for Sustainability at
+                                    Mercedes-Benz AG.</p>
+                                <footer class="flex items-center mt-4">
+                                    <a href="https://www.fast.kit.edu/lff/Team_10658.php" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <img class="rounded-full shrink-0 mr-4" src="./images/news-author-01.jpg"
+                                            width="40" height="40" alt="Author 01" />
+                                    </a>
+                                    <div class="font-medium">
+                                        <a class="text-gray-200 hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="https://www.fast.kit.edu/lff/Team_10658.php" target="_blank"
+                                            rel="noopener noreferrer">Matthias Vollat</a>
+                                        <span class="text-gray-700"> - </span>
+                                        <span class="text-gray-500">Apr 11, 2024</span>
+                                    </div>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <!-- article -->
+                        <div class="swiper-slide h-auto flex flex-col max-w-[446px] group">
+                            <article class="flex flex-col h-full" data-aos="fade-up">
+                                <header>
+                                    <a class="block mb-6" href="./news/2024-04-01.html">
+                                        <figure class="relative h-0 pb-9/16 overflow-hidden rounded-sm">
+                                            <img class="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
+                                                loading="lazy" src="./images/2024-04-01-preview.jpg" width="352"
+                                                height="198" alt="News 01" />
+                                        </figure>
+                                    </a>
+                                    <div class="mb-3">
+                                        <ul class="flex flex-wrap text-xs font-medium -m-1">
+                                            <li class="m-1">
+                                                <a class="inline-flex text-center text-gray-100 py-1 px-3 rounded-full bg-gray-800 hover:bg-gray-700 transition duration-150 ease-in-out"
+                                                    href="#0">Team</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h3 class="h4 mb-2">
+                                        <a class="hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="./news/2024-04-01.html">New Scientific Speaker</a>
+                                    </h3>
+                                </header>
+                                <p class="text-lg text-gray-400 grow">Eric Sax becomes the successor of Frank Gauterin.
+                                </p>
+                                <footer class="flex items-center mt-4">
+                                    <a href="https://www.fast.kit.edu/lff/Team_10658.php" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <img class="rounded-full shrink-0 mr-4" src="./images/news-author-01.jpg"
+                                            width="40" height="40" alt="Author 01" />
+                                    </a>
+                                    <div class="font-medium">
+                                        <a class="text-gray-200 hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="https://www.fast.kit.edu/lff/Team_10658.php" target="_blank"
+                                            rel="noopener noreferrer">Matthias Vollat</a>
+                                        <span class="text-gray-700"> - </span>
+                                        <span class="text-gray-500">Apr 01, 2024</span>
+                                    </div>
+                                </footer>
+                            </article>
+                        </div>
 
                         <!-- article -->
                         <div class="swiper-slide h-auto flex flex-col max-w-[446px] group">
