@@ -2027,7 +2027,7 @@
       fetch('./shared/header.html')
         .then(response => response.text())
         .then(data => {
-          document.getElementById('header').innerHTML = data;
+          document.getElementById('header-container').innerHTML = data;
           // Re-initialize Alpine.js after injecting content
           Alpine.initTree(document.getElementById('header-container'));
         })
