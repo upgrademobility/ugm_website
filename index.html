@@ -31,10 +31,10 @@
           .then((html) => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, "text/html");
-            const footer = doc.getElementById("header");
+            const header = doc.getElementById("header");
 
             // Append the footer to the body of the destination document
-            document.body.appendChild(footer);
+            document.body.appendChild(header);
           });
       </script>
 
