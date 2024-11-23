@@ -1,0 +1,11 @@
+{
+  "[html]": {
+    "editor.foldingStrategy": "indentation",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+  },
+  "html.validate.scripts": true,
+  "html.format.wrapAttributes": "auto",
+  "html.format.indentInnerHtml": true
+}
