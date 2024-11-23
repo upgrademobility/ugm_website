@@ -25,7 +25,7 @@
     <!-- Page wrapper -->
     <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
       <!-- Site header -->
-      <header class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
+      <div class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
         @scroll.window="isTop" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !top }">
         <script>
           document.addEventListener("alpine:init", () => {
@@ -44,15 +44,15 @@
           fetch("./shared/header.html")
             .then((response) => response.text())
             .then((html) => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
-              const header = doc.getElementById("header");
+              const header_parser = new DOMParser();
+              const header_doc = header_parser.parseFromString(html, "text/html");
+              const header = header_doc.getElementById("header");
 
               // Append the header to the body of the destination document
               document.body.appendChild(header);
             });
         </script>
-      </header>
+      </div>
 
       <!-- Page content -->
       <main class="grow">
