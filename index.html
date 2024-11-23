@@ -25,18 +25,34 @@
     <!-- Page wrapper -->
     <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
       <!-- Site header -->
-      <script>
-        fetch("./shared/header.html")
-          .then((response) => response.text())
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const header = doc.getElementById("header");
-
-            // Append the header to the body of the destination document
-            document.body.appendChild(header);
+      <header class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
+        @scroll.window="isTop" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !top }">
+        <script>
+          document.addEventListener("alpine:init", () => {
+            Alpine.data("handleHeader", () => ({
+              top: true,
+              isTop() {
+                this.top = window.pageYOffset < 10;
+              },
+              init() {
+                this.isTop();
+              },
+            }));
           });
-      </script>
+        </script>
+        <script>
+          fetch("./shared/header.html")
+            .then((response) => response.text())
+            .then((html) => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, "text/html");
+              const header = doc.getElementById("header");
+
+              // Append the header to the body of the destination document
+              document.body.appendChild(header);
+            });
+        </script>
+      </header>
 
       <!-- Page content -->
       <main class="grow">
@@ -251,7 +267,8 @@
                       fill="none"></path>
                     <path transform="translate(20, 20)" class="stroke-current text-kitgreen-100" stroke-width="2"
                       stroke-linecap="square"
-                      d="M12,12c3.1,0,5.5-3.47,5.5-6.455a5.5,5.5,0,1,0-11,0C6.5,8.53,8.9,12,12,12Z" fill="none"></path>
+                      d="M12,12c3.1,0,5.5-3.47,5.5-6.455a5.5,5.5,0,1,0-11,0C6.5,8.53,8.9,12,12,12Z" fill="none">
+                    </path>
                   </svg>
                   <h4 class="h4 mb-2">Individual Support</h4>
                   <p class="text-lg text-gray-400 text-center">
@@ -1029,7 +1046,8 @@
                     &#x2022; Contact with other institutes within and outside
                     the
                     <a class="text-kitgreen-300 hover:text-kitgreen-600" href="https://www.mobilitaetssysteme.kit.edu/"
-                      target="_blank" rel="noopener noreferrer">KIT Mobility Systems Center</a>
+                      target="_blank" rel="noopener noreferrer">KIT
+                      Mobility Systems Center</a>
                     is intensified.
                   </p>
                   <p class="text-lg text-gray-400 text-center">
@@ -1948,7 +1966,8 @@
                     UpGrade Mobility is one of the KIT Graduate Schools for
                     excellent doctorial researchers, setteled at the
                     <a class="text-kitgreen-300 hover:text-kitgreen-600" href="https://www.mobilitaetssysteme.kit.edu/"
-                      target="_blank" rel="noopener noreferrer">KIT Mobility Systems Center</a>. This program represents
+                      target="_blank" rel="noopener noreferrer">KIT
+                      Mobility Systems Center</a>. This program represents
                     an interdisciplinary
                     qualification platform. The professional aim is a systemic
                     qualification of the doctorial researchers beyond their
@@ -1992,7 +2011,8 @@
                     The school offers a monthly changing lecture topic from the
                     fields of the
                     <a class="text-kitgreen-300 hover:text-kitgreen-600" href="https://www.mobilitaetssysteme.kit.edu/"
-                      target="_blank" rel="noopener noreferrer">KIT Mobility Systems Center</a>. In addition, a
+                      target="_blank" rel="noopener noreferrer">KIT
+                      Mobility Systems Center</a>. In addition, a
                     cooperation with the Graduate School of
                     the
                     <a class="text-kitgreen-300 hover:text-kitgreen-600" href="https://www.leeds.ac.uk" target="_blank"
