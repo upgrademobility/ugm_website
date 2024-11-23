@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<script defer src="../js/vendors/alpinejs.min.js"></script>
+<script defer src="./js/vendors/alpinejs.min.js"></script>
+
 <header id="header" class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
   @scroll.window="isTop" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !top }">
   <script>
@@ -96,9 +99,4 @@
       </div>
     </div>
   </div>
-
-  <script src="../js/vendors/alpinejs.min.js" defer></script>
-  <script src="../js/vendors/aos.js"></script>
-  <script src="../js/vendors/swiper-bundle.min.js"></script>
-  <script src="../js/vendors/jquery.min.js"></script>
 </header>
