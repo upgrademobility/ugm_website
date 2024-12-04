@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- Site header -->
-<header id="header" class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
+<header class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="handleHeader"
   @scroll.window="isTop" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !top }">
   <script>
     document.addEventListener("alpine:init", () => {
