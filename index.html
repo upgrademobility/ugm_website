@@ -35,6 +35,15 @@
             .then(data => {
               document.getElementById('header-placeholder').innerHTML = data;
               // Initialize Alpine.js after the header is loaded
+              Alpine.data("handleHeader", () => ({
+                top: true,
+                isTop() {
+                  this.top = window.pageYOffset < 10;
+                },
+                init() {
+                  this.isTop();
+                },
+              }));
               Alpine.start();
             });
         });

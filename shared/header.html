@@ -84,16 +84,3 @@
     </div>
   </div>
 </header>
-<script>
-  document.addEventListener("alpine:init", () => {
-    Alpine.data("handleHeader", () => ({
-      top: true,
-      isTop() {
-        this.top = window.pageYOffset < 10;
-      },
-      init() {
-        this.isTop();
-      },
-    }));
-  });
-</script>
