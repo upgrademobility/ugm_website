@@ -42,6 +42,13 @@
               }));
 
               // Change the button style and link for the application button
+              const desktopButton = document.getElementById('application-desktop');
+              if (desktopButton) {
+                desktopButton.classList.remove('bg-kitgreen-600', 'hover:bg-kitgreen-700');
+                desktopButton.classList.add('bg-kitcyan-600', 'hover:bg-kitcyan-700');
+                desktopButton.href = '#application_winterschool';
+              }
+
               const button = document.getElementById('application-mobile');
               if (button) {
                 button.classList.remove('bg-kitgreen-600', 'hover:bg-kitgreen-700');
