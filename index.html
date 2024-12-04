@@ -28,7 +28,7 @@
       <div id="header-placeholder"></div>
       <script>
         document.addEventListener("DOMContentLoaded", function () {
-          fetch('shared/header.html')
+          fetch('/shared/header.html')
             .then(response => response.text())
             .then(data => {
               document.getElementById('header-placeholder').innerHTML = data;
@@ -2068,7 +2068,7 @@
 
       <!-- Site footer -->
       <script>
-        fetch("./shared/footer.html")
+        fetch("/shared/footer.html")
           .then((response) => response.text())
           .then((html) => {
             const parser = new DOMParser();
