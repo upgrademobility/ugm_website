@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>KIT Graduate School UpGrade Mobility - Program</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="../css/vendors/aos.css" rel="stylesheet" />
+    <link href="../style.css" rel="stylesheet" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+
+  <body class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
+    <!-- Page wrapper -->
+    <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
+      <!-- Site header -->
+      <div id="header-placeholder"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          fetch('../shared/header.html')
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById('header-placeholder').innerHTML = data;
+
+              // Initialize Alpine.js after the header is loaded
+              Alpine.data("handleHeader", () => ({
+                top: true,
+                isTop() {
+                  this.top = window.pageYOffset < 10;
+                },
+                init() {
+                  this.isTop();
+                },
+              }));
+            });
+        });
+      </script>
+
+      <!-- Page content -->
+      <main class="grow">
+        <!-- Hero -->
+        <section class="relative">
+          <!-- Background image
+          <div class="absolute inset-0">
+            <img class="w-full h-full object-cover" src="../images/about-hero.jpg" width="1440" height="394"
+              alt="About" />
+            <div class="absolute inset-0 bg-gray-900 opacity-75" aria-hidden="true"></div>
+          </div> -->
+
+          <!-- Hero content -->
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 relative">
+            <div class="pt-32 pb-12 md:pt-40 md:pb-20">
+              <div class="max-w-3xl mx-auto text-center">
+                <h3 class="h3 mb-0" data-aos="fade-up">UpGrade Mobility</h3>
+                <h1 class="h1 mb-4" data-aos="fade-up">Current Program</h1>
+
+                <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
+                  This page gives an overview about the upcoming meetings and trainings
+                  of the UpGrade Mobility Graduate School. The offers are open to all
+                  graduate school members.
+                </p>
+              </div>
+              <div class="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
+                <!-- Hide the "Apply Now" button -->
+                <div data-aos="fade-up" data-aos-delay="600">
+                  <a class="btn text-white bg-kitgreen-600 hover:bg-kitgreen-700 w-full mb-4 sm:w-auto sm:mb-0"
+                    href="#topic_lecture">Topic Lecture</a>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="600">
+                  <a class="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
+                    href="#regular_meeting">Regular Meeting</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Topic Lecture -->
+        <section id="topic_lecture">
+          <!-- Section header -->
+          <div class="max-w-3xl mx-auto text-center pb-12 md:pb-15">
+            <h2 class="h2 mb-4">Topic Lecture</h2>
+            <p class="text-xl text-gray-400">
+              The topic lecture takes place on average once a month, in an alternating format between
+              <b>online lectures</b> (in English) and in-person <b>fireside talks</b> (in German).
+            </p>
+          </div>
+          <!-- Fireside Talks -->
+          <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl font-semibold text-center mb-6 text-white">Fireside Talks (in-person)</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full table-auto border-collapse border border-gray-700 text-sm text-gray-200 mb-8">
+                <thead class="bg-gray-900">
+                  <tr>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Date</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Time</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Speaker(s)</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">January 27, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">5:30 PM - 7:00 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Armin and Hannah Rupalla, <br />
+                      Top Management of
+                      <a href="https://www.rac.de/" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1"
+                        target="_blank" rel="noopener noreferrer">
+                        RA Consulting GmbH
+                      </a>
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">TRIANGEL, Karlsruhe</td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">February 10, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">5:30 PM - 7:00 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Thomas Hentschel MdL (Die Grünen), <br />
+                      Member of the State Parliament of Baden-Württemberg
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">TRIANGEL, Karlsruhe</td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">March 10, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">5:30 PM - 7:00 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Joerg Genz, Wirtschaftsjunioren Deutschland
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">TRIANGEL, Karlsruhe</td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">April 7, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">5:30 PM - 7:00 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Dr. Thomas Beck, <br />
+                      CEO of
+                      <a href="https://www.vector.com/int/en/" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1"
+                        target="_blank" rel="noopener noreferrer">
+                        Vector Informatik GmbH
+                      </a>
+                      and Vector Consulting Services
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">TRIANGEL, Karlsruhe</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Online Lectures -->
+          <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl font-semibold text-center mb-6 text-white">Online Lectures</h2>
+            <!-- Text URL link -->
+            <a href="https://tinyurl.com/23jecy9h" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1"
+              target="_blank" rel="noopener noreferrer">
+              Microsoft Teams Link <br /> <br />
+            </a>
+            <div class="overflow-x-auto">
+              <table class="w-full table-auto border-collapse border border-gray-700 text-sm text-gray-200 mb-8">
+                <thead class="bg-gray-900">
+                  <tr>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Date</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Time</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Speaker(s)</th>
+                    <th class="border border-gray-700 px-4 py-2 text-left">Presentation Title</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">March 03, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">2:00 PM - 3:30 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      <a href="https://www.wbk.kit.edu/21_211.php"
+                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1" target="_blank"
+                        rel="noopener noreferrer">
+                        Prof. Jürgen Fleischer (KIT-wbk)
+                      </a>
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Circularity in E-Mobility – Automated Disassembly as Enabler</td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">May 05, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">2:00 PM - 3:30 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      <a href="https://www.fast.kit.edu/lff/Team_Frey.php"
+                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1" target="_blank"
+                        rel="noopener noreferrer">
+                        Dr. Michael Frey (KIT-FAST)
+                      </a>
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      Testing automated driving functions – the mystery of "test approval"</td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">July 07, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">2:00 PM - 3:30 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      <a href="https://www.hs-esslingen.de/personen/hugo-gabele?sva_bereich=INE&cHash=c1e23bfbe4c7644f4237069ccac9f5e1"
+                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1" target="_blank"
+                        rel="noopener noreferrer">
+                        Prof. Hugo Gabele (Hoschule Esslingen)
+                      </a>
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      LiMo (Sustainable urban Living and Mobility Concept): ein neuartiges Fahrzeugkonzept
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-700">
+                    <td class="border border-gray-700 px-4 py-2">October 06, 2025</td>
+                    <td class="border border-gray-700 px-4 py-2">2:00 PM - 3:30 PM</td>
+                    <td class="border border-gray-700 px-4 py-2">
+                      <a href="https://netze.econ.kit.edu/21_85.php"
+                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1" target="_blank"
+                        rel="noopener noreferrer">
+                        Dr. Eckhard Szimba (KIT-ECON)
+                      </a>
+                    </td>
+                    <td class="border border-gray-700 px-4 py-2">Socio-economic impacts of connected and automated
+                      mobility</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Regular Meeting -->
+        <section id="regular_meeting">
+          <!-- Section header -->
+          <div class="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+            <h2 class="h2 mb-4">Regular Meeting</h2>
+            <p class="text-xl text-gray-400">
+              The monthly regular meeting takes place on every third Monday of the month.
+              It is an opportunity for the PhDs of the graduate school to present their research
+              and discuss it with our multidisciplinary team. Besides that, it is a
+              great platform for networking and exchange.
+            </p>
+          </div>
+          <!-- Add To be Updated hint -->
+          <h2 class="text-2xl font-semibold text-center mb-6 text-white">To be Updated!</h2>
+
+      </main>
+
+      <!-- Site footer -->
+      <script>
+        fetch("../shared/footer.html")
+          .then((response) => response.text())
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const footer = doc.getElementById("footer");
+
+            // Append the footer to the body of the destination document
+            document.body.appendChild(footer);
+          });
+      </script>
+    </div>
+
+    <script src="../js/vendors/alpinejs.min.js" defer></script>
+    <script src="../js/vendors/aos.js"></script>
+    <script src="../js/vendors/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      (function ($) {
+        $("a[href^=mailto]").each(function () {
+          var href = $(this).attr("href");
+          $(this).click(function () {
+            var t;
+            var self = $(this);
+
+            $(window).blur(function () {
+              // The browser apparently responded, so stop the timeout.
+              clearTimeout(t);
+            });
+
+            t = setTimeout(function () {
+              // The browser did not respond after 500ms, so open an alternative URL.
+              // document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
+              alert(
+                "No email client was detected. Please apply via upgrademobility@kit.edu."
+              );
+            }, 1000);
+          });
+        });
+      })(jQuery);
+    </script>
+  </body>
+
+</html>
