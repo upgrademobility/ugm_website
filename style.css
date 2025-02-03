@@ -171,6 +171,10 @@ sup {
 3. Remove gaps between table borders by default.
 */
 
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   text-indent: 0;
   /* 1 */
