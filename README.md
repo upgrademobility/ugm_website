@@ -2,7 +2,7 @@
 
 # UGM Website
 
-Welcome to the codebase of the HTML website of the UGM. 
+Static HTML website for the KIT Graduate School UpGrade Mobility. Edit the HTML, images, and CSS directly, then push to GitHub. [GitHub Pages](https://pages.github.com/) publishes the committed files as-is — no build step runs in CI.
 
 ## Details
 
@@ -10,9 +10,20 @@ Bootstrap Icons: https://icons.getbootstrap.com/
 Nucleo Icons: https://nucleoapp.com/free-icons    
 KIT Colors: https://raw.githubusercontent.com/camminady/kitcolors/master/example.png
 
+## Site structure
+
+| What | Where |
+|------|-------|
+| Homepage | `index.html` |
+| Other pages | `pages/` |
+| News articles | `news/YYYY-MM-DD.html` |
+| Images | `images/` |
+| Styles | `style.css` (site CSS), `css/vendors/` (third-party) |
+| Scripts | `js/` |
+
 ## Add News Articles
 
-Each news item is a standalone HTML page plus a carousel card on the homepage. The workflow: copy an existing article, rename it, edit the content, add images, and update `index.html`.
+Each news item is a standalone HTML page plus a carousel card on the homepage. The workflow: copy an existing article, rename it, edit the content, add images, and add a carousel card to `index.html`. Commit and push — GitHub Pages publishes automatically.
 
 ### Overview
 
@@ -91,7 +102,7 @@ In the "Article tags" block, choose **one** category and copy the matching line 
 | Content | `<span class="news-tag news-tag--content">Content</span>` |
 | Think Tank | `<span class="news-tag news-tag--think-tank">Think Tank</span>` |
 
-Use the **same tag** on the article page and in `index.html` (Step 4).
+Use the **same tag** on the article page and in the carousel card (Step 4).
 
 #### Header image
 
@@ -127,10 +138,10 @@ Add or remove `{ img: '…' }` lines to match the number of photos you uploaded.
 
 ### Step 4 — Add a carousel card to `index.html`
 
-The homepage News carousel is in `index.html`. Search for `id="news"` or `<!-- @section:news-carousel-slides -->`.
+The homepage News carousel is in `index.html`. Search for `id="news"` or `<!-- News carousel slides -->`.
 
 1. Copy the entire first `<!-- article -->` block (from `<!-- article -->` through the closing `</div>` of that slide — the block ends just before the next `<!-- article -->`).
-2. Paste it **immediately after** the line `<!-- @section:news-carousel-slides -->`, so the new article is first.
+2. Paste it **immediately after** the line `<!-- News carousel slides -->`, so the new article is first.
 3. In the pasted block, update every occurrence of the old article:
 
 | Element | What to change |
@@ -143,3 +154,5 @@ The homepage News carousel is in `index.html`. Search for `id="news"` or `<!-- @
 | Author photo | `src`, `alt`, and profile `href` |
 | Author name | Linked name in the footer of the card |
 | Date | `<span class="text-gray-400">` in the card footer |
+
+Commit and push. GitHub Pages will publish the updated site automatically.
