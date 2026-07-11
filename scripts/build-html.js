@@ -1,5 +1,6 @@
 /**
- * Inline shared header and footer into HTML pages at build time.
+ * Sync shared header and footer partials into HTML pages.
+ * Run after editing shared/header.html or shared/footer.html.
  */
 const fs = require("fs");
 const path = require("path");
@@ -7,19 +8,17 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const SHARED_DIR = path.join(ROOT, "shared");
 
-const HEADER_INIT_SCRIPT = `      <script>
-        document.addEventListener("alpine:init", () => {
-          Alpine.data("handleHeader", () => ({
-            top: true,
-            isTop() {
-              this.top = window.pageYOffset < 10;
-            },
-            init() {
-              this.isTop();
-            },
-          }));
-        });
-      </script>`;
+const HEADER_BLOCK_PATTERN =
+  /<!-- Site header -->[\s\S]*?(?=<!-- Page content -->|<main)/;
+
+const FOOTER_BLOCK_PATTERN =
+  /<!-- Site footer -->[\s\S]*?<\/footer>\s*/;
+
+const PLACEHOLDER_HEADER_PATTERN =
+  /<!-- Site header -->\s*<div id="header-placeholder"><\/div>\s*<script>[\s\S]*?shared\/header\.html[\s\S]*?<\/script>/;
+
+const PLACEHOLDER_FOOTER_PATTERN =
+  /<!-- Site footer -->\s*<script>[\s\S]*?shared\/footer\.html[\s\S]*?<\/script>/;
 
 function stripPartialWrapper(content) {
   return content.replace(/^<!DOCTYPE html>\s*/i, "").trim();
@@ -33,6 +32,19 @@ function indentBlock(content, spaces) {
     .join("\n");
 }
 
+function assetPrefix(filePath) {
+  const relativeDir = path.relative(ROOT, path.dirname(filePath));
+  if (!relativeDir || relativeDir === ".") {
+    return "./";
+  }
+  const depth = relativeDir.split(path.sep).length;
+  return "../".repeat(depth);
+}
+
+function headerScriptTag(prefix) {
+  return `${" ".repeat(6)}<script src="${prefix}js/site-header.js" defer></script>\n`;
+}
+
 function loadPartials() {
   const header = stripPartialWrapper(
     fs.readFileSync(path.join(SHARED_DIR, "header.html"), "utf8")
@@ -43,16 +55,14 @@ function loadPartials() {
   return { header, footer };
 }
 
-const HEADER_BLOCK_PATTERN =
-  /<!-- Site header -->\s*<div id="header-placeholder"><\/div>\s*<script>[\s\S]*?shared\/header\.html[\s\S]*?<\/script>/;
-
-const FOOTER_BLOCK_PATTERN =
-  /<!-- Site footer -->\s*<script>[\s\S]*?shared\/footer\.html[\s\S]*?<\/script>/;
-
 function walkHtmlFiles(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory() && entry.name !== "node_modules" && entry.name !== "shared") {
+    if (
+      entry.isDirectory() &&
+      entry.name !== "node_modules" &&
+      entry.name !== "shared"
+    ) {
       walkHtmlFiles(fullPath, files);
     } else if (entry.isFile() && entry.name.endsWith(".html")) {
       files.push(fullPath);
@@ -61,34 +71,45 @@ function walkHtmlFiles(dir, files = []) {
   return files;
 }
 
-function inlinePartials(filePath, { header, footer }) {
+function syncPartials(filePath, { header, footer }) {
   let content = fs.readFileSync(filePath, "utf8");
   let changed = false;
+  const prefix = assetPrefix(filePath);
 
-  if (HEADER_BLOCK_PATTERN.test(content)) {
-    const replacement = [
-      "<!-- Site header -->",
-      indentBlock(header, 6),
-      HEADER_INIT_SCRIPT,
-    ].join("\n");
-    content = content.replace(HEADER_BLOCK_PATTERN, replacement);
+  const headerReplacement = [
+    "<!-- Site header -->",
+    indentBlock(header, 6),
+    headerScriptTag(prefix).trimEnd(),
+  ].join("\n");
+
+  if (PLACEHOLDER_HEADER_PATTERN.test(content)) {
+    content = content.replace(PLACEHOLDER_HEADER_PATTERN, headerReplacement);
+    changed = true;
+  } else if (HEADER_BLOCK_PATTERN.test(content)) {
+    content = content.replace(HEADER_BLOCK_PATTERN, `${headerReplacement}\n\n      `);
     changed = true;
   }
 
-  if (FOOTER_BLOCK_PATTERN.test(content)) {
-    const replacement = ["<!-- Site footer -->", indentBlock(footer, 6)].join("\n");
-    content = content.replace(FOOTER_BLOCK_PATTERN, replacement);
+  const footerReplacement = ["<!-- Site footer -->", indentBlock(footer, 6)].join(
+    "\n"
+  );
+
+  if (PLACEHOLDER_FOOTER_PATTERN.test(content)) {
+    content = content.replace(PLACEHOLDER_FOOTER_PATTERN, footerReplacement);
+    changed = true;
+  } else if (FOOTER_BLOCK_PATTERN.test(content)) {
+    content = content.replace(FOOTER_BLOCK_PATTERN, `${footerReplacement}\n`);
     changed = true;
   }
 
   if (changed) {
     fs.writeFileSync(filePath, content);
-    console.log(`Inlined partials in ${path.relative(ROOT, filePath)}`);
+    console.log(`Synced partials in ${path.relative(ROOT, filePath)}`);
   }
 }
 
 const partials = loadPartials();
 
 for (const filePath of walkHtmlFiles(ROOT)) {
-  inlinePartials(filePath, partials);
+  syncPartials(filePath, partials);
 }
