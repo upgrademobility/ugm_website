@@ -11,16 +11,20 @@ const JPEG_QUALITY = 88;
 const PREVIEW_JPEG_QUALITY = 85;
 const FLATTEN_BACKGROUND = { r: 17, g: 24, b: 39 }; // gray-900
 
-// Already correctly sized for their largest on-page display (2x retina).
-// Do not recompress or downscale these.
-const SKIP_IMAGES = new Set([
-  "Sommer.jpg", // 400x400: members page at 120px, news at 40px
+// Avatars displayed at 40–48px; optimize at 2x retina.
+const AVATAR_IMAGES = new Set([
+  "Sommer.jpg",
   "news-author-01.jpg",
   "news-author-02.jpg",
   "news-kurz.jpg",
   "testimonial-01.jpg",
   "testimonial-02.jpg",
   "testimonial-03.jpg",
+]);
+
+// Already correctly sized for their largest on-page display (2x retina).
+// Do not recompress or downscale these.
+const SKIP_IMAGES = new Set([
   "team-member-kurz.jpg",
   "team-member-01.jpg",
   "team-member-02.jpg",
@@ -124,11 +128,15 @@ function getRule(filename) {
   }
 
   if (isInnerImage(filename)) {
-    return { type: "inner", maxWidth: 1536, quality: JPEG_QUALITY };
+    return { type: "inner", maxWidth: 768, quality: JPEG_QUALITY, webp: true };
   }
 
   if (TAB_IMAGES.has(filename)) {
-    return { type: "tab", maxWidth: 1032, quality: JPEG_QUALITY };
+    return { type: "tab", maxWidth: 768, quality: JPEG_QUALITY, webp: true };
+  }
+
+  if (AVATAR_IMAGES.has(filename)) {
+    return { type: "avatar", maxWidth: 80, quality: PREVIEW_JPEG_QUALITY };
   }
 
   if (UI_PNG.has(filename)) {
@@ -145,6 +153,14 @@ function getRule(filename) {
 
 async function writeJpeg(pipeline, outputPath, quality) {
   await pipeline.jpeg({ quality, mozjpeg: true }).toFile(outputPath);
+}
+
+async function writeWebp(inputPath, outputPath, maxWidth) {
+  await sharp(inputPath)
+    .rotate()
+    .resize({ width: maxWidth, withoutEnlargement: true })
+    .webp({ quality: 82 })
+    .toFile(outputPath);
 }
 
 async function optimizeImage(filename) {
@@ -189,6 +205,13 @@ async function optimizeImage(filename) {
   console.log(
     `${filename}${outputName !== filename ? ` -> ${outputName}` : ""}: ${sourceMeta.width}x${sourceMeta.height} -> ${outputMeta.width}x${outputMeta.height}, ${formatKiB(before)} -> ${formatKiB(after)}`
   );
+
+  if (rule.webp) {
+    const webpPath = outputPath.replace(/\.jpe?g$/i, ".webp");
+    await writeWebp(inputPath, webpPath, rule.maxWidth);
+    const webpSize = fs.statSync(webpPath).size;
+    console.log(`  -> ${path.basename(webpPath)}: ${formatKiB(webpSize)}`);
+  }
 }
 
 function updateHtmlReferences() {

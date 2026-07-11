@@ -5,6 +5,21 @@ AOS.init({
   easing: 'ease-out-sine',
 });
 
+function loadSwiper() {
+  if (typeof Swiper !== 'undefined') {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = '/js/vendors/swiper-bundle.min.js';
+    script.defer = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
 function initNewsCarousel() {
   const carouselEl = document.querySelector('.carousel.swiper-container');
   if (!carouselEl || carouselEl.dataset.swiperInitialized === 'true' || typeof Swiper === 'undefined') {
@@ -27,6 +42,12 @@ function initNewsCarousel() {
   });
 }
 
+function prepareNewsCarousel() {
+  loadSwiper()
+    .then(() => requestAnimationFrame(initNewsCarousel))
+    .catch(() => {});
+}
+
 const newsCarousel = document.querySelector('.carousel.swiper-container');
 if (newsCarousel) {
   if ('IntersectionObserver' in window) {
@@ -34,13 +55,13 @@ if (newsCarousel) {
       (entries, obs) => {
         if (entries.some((entry) => entry.isIntersecting)) {
           obs.disconnect();
-          requestAnimationFrame(initNewsCarousel);
+          prepareNewsCarousel();
         }
       },
       { rootMargin: '200px 0px' }
     );
     observer.observe(newsCarousel);
   } else {
-    initNewsCarousel();
+    prepareNewsCarousel();
   }
 }
