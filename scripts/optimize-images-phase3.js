@@ -9,11 +9,13 @@ const ROOT = path.join(__dirname, "..");
 const IMAGES_DIR = path.join(ROOT, "images");
 const JPEG_QUALITY = 88;
 const PREVIEW_JPEG_QUALITY = 85;
+const INNER_MAX_WIDTH = 1536;
+const INNER_WEBP_QUALITY = 88;
+const TEAM_MEMBER_SIZE = 240;
 const FLATTEN_BACKGROUND = { r: 17, g: 24, b: 39 }; // gray-900
 
 // Avatars displayed at 40–48px; optimize at 2x retina.
 const AVATAR_IMAGES = new Set([
-  "Sommer.jpg",
   "news-author-01.jpg",
   "news-author-02.jpg",
   "news-kurz.jpg",
@@ -22,15 +24,20 @@ const AVATAR_IMAGES = new Set([
   "testimonial-03.jpg",
 ]);
 
-// Already correctly sized for their largest on-page display (2x retina).
-// Do not recompress or downscale these.
-const SKIP_IMAGES = new Set([
-  "team-member-kurz.jpg",
+// Members page portraits at 120px; keep at 240px (2x retina).
+const TEAM_MEMBER_IMAGES = new Set([
+  "Sommer.jpg",
   "team-member-01.jpg",
   "team-member-02.jpg",
+  "team-member-kurz.jpg",
   "eva.jpg",
   "alexandra.jpg",
   "francesco.jpg",
+]);
+
+// Already correctly sized for their largest on-page display (2x retina).
+// Do not recompress or downscale these.
+const SKIP_IMAGES = new Set([
   "404.jpg",
   "about-hero.jpg",
   "members-hero.jpg",
@@ -128,11 +135,25 @@ function getRule(filename) {
   }
 
   if (isInnerImage(filename)) {
-    return { type: "inner", maxWidth: 768, quality: JPEG_QUALITY, webp: true };
+    return {
+      type: "inner",
+      maxWidth: INNER_MAX_WIDTH,
+      quality: JPEG_QUALITY,
+      webp: true,
+      webpQuality: INNER_WEBP_QUALITY,
+    };
   }
 
   if (TAB_IMAGES.has(filename)) {
     return { type: "tab", maxWidth: 768, quality: JPEG_QUALITY, webp: true };
+  }
+
+  if (TEAM_MEMBER_IMAGES.has(filename)) {
+    return {
+      type: "team-member",
+      size: TEAM_MEMBER_SIZE,
+      quality: JPEG_QUALITY,
+    };
   }
 
   if (AVATAR_IMAGES.has(filename)) {
@@ -155,11 +176,19 @@ async function writeJpeg(pipeline, outputPath, quality) {
   await pipeline.jpeg({ quality, mozjpeg: true }).toFile(outputPath);
 }
 
-async function writeWebp(inputPath, outputPath, maxWidth) {
+async function writeWebp(inputPath, outputPath, maxWidth, quality = 82) {
   await sharp(inputPath)
     .rotate()
     .resize({ width: maxWidth, withoutEnlargement: true })
-    .webp({ quality: 82 })
+    .webp({ quality })
+    .toFile(outputPath);
+}
+
+async function writeTeamMemberPortrait(inputPath, outputPath, size, quality) {
+  await sharp(inputPath)
+    .rotate()
+    .resize(size, size, { fit: "cover", position: "centre" })
+    .jpeg({ quality, mozjpeg: true })
     .toFile(outputPath);
 }
 
@@ -180,19 +209,24 @@ async function optimizeImage(filename) {
   const outputPath = path.join(IMAGES_DIR, outputName);
   const tempPath = `${outputPath}.tmp`;
 
-  let pipeline = sharp(inputPath).rotate();
+  if (rule.type === "team-member") {
+    await writeTeamMemberPortrait(inputPath, tempPath, rule.size, rule.quality);
+    fs.renameSync(tempPath, outputPath);
+  } else {
+    let pipeline = sharp(inputPath).rotate();
 
-  pipeline = pipeline.resize({
-    width: rule.maxWidth,
-    withoutEnlargement: true,
-  });
+    pipeline = pipeline.resize({
+      width: rule.maxWidth,
+      withoutEnlargement: true,
+    });
 
-  if (filename.toLowerCase().endsWith(".png")) {
-    pipeline = pipeline.flatten({ background: FLATTEN_BACKGROUND });
+    if (filename.toLowerCase().endsWith(".png")) {
+      pipeline = pipeline.flatten({ background: FLATTEN_BACKGROUND });
+    }
+
+    await writeJpeg(pipeline, tempPath, rule.quality);
+    fs.renameSync(tempPath, outputPath);
   }
-
-  await writeJpeg(pipeline, tempPath, rule.quality);
-  fs.renameSync(tempPath, outputPath);
 
   if (outputName !== filename) {
     fs.unlinkSync(inputPath);
@@ -208,9 +242,30 @@ async function optimizeImage(filename) {
 
   if (rule.webp) {
     const webpPath = outputPath.replace(/\.jpe?g$/i, ".webp");
-    await writeWebp(inputPath, webpPath, rule.maxWidth);
+    const webpSource = rule.type === "inner" ? outputPath : inputPath;
+    const webpMeta = await sharp(webpSource).metadata();
+    const webpWidth = Math.min(webpMeta.width, rule.maxWidth);
+    await writeWebp(webpSource, webpPath, webpWidth, rule.webpQuality || 82);
     const webpSize = fs.statSync(webpPath).size;
     console.log(`  -> ${path.basename(webpPath)}: ${formatKiB(webpSize)}`);
+  }
+}
+
+async function regenerateInnerWebpOnly() {
+  const innerJpegs = fs
+    .readdirSync(IMAGES_DIR)
+    .filter((filename) => isInnerImage(filename) && /\.jpe?g$/i.test(filename))
+    .sort();
+
+  for (const filename of innerJpegs) {
+    const jpegPath = path.join(IMAGES_DIR, filename);
+    const webpPath = jpegPath.replace(/\.jpe?g$/i, ".webp");
+    const meta = await sharp(jpegPath).metadata();
+    const webpWidth = Math.min(meta.width, INNER_MAX_WIDTH);
+    await writeWebp(jpegPath, webpPath, webpWidth, INNER_WEBP_QUALITY);
+    console.log(
+      `Regenerated ${path.basename(webpPath)} from ${filename} (${webpWidth}px, ${formatKiB(fs.statSync(webpPath).size)})`
+    );
   }
 }
 
@@ -252,6 +307,13 @@ function updateHtmlReferences() {
 }
 
 async function main() {
+  const webpOnly = process.argv.includes("--webp-only");
+
+  if (webpOnly) {
+    await regenerateInnerWebpOnly();
+    return;
+  }
+
   const files = fs.readdirSync(IMAGES_DIR).sort();
 
   for (const filename of files) {

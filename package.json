@@ -11,7 +11,8 @@
     "build:html": "node scripts/build-html.js",
     "optimize-images:phase1": "node scripts/optimize-images-phase1.js",
     "optimize-images:phase2": "node scripts/optimize-images-phase2.js",
-    "optimize-images:phase3": "node scripts/optimize-images-phase3.js"
+    "optimize-images:phase3": "node scripts/optimize-images-phase3.js",
+    "optimize-images:inner-webp": "node scripts/optimize-images-phase3.js --webp-only"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
