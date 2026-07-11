@@ -196,7 +196,12 @@
 
                         <!-- Alpine.js template for bullets: https://github.com/alpinejs/alpine#x-for -->
                         <template x-for="(item, index) in items" :key="index">
-                          <button class="p-1 group" @click="active = index; stopAutorotate();">
+                          <button
+                            type="button"
+                            class="p-1 group"
+                            @click="active = index; stopAutorotate();"
+                            :aria-label="'Go to slide ' + (index + 1) + ' of ' + items.length"
+                            :aria-current="active === index ? 'true' : 'false'">
                             <span
                               class="block w-2 h-2 rounded-full group-hover:bg-gray-400 transition duration-150 ease-in-out"
                               :class="active === index ? 'bg-gray-200' : 'bg-gray-500'"></span>
