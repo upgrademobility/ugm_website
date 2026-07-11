@@ -7,6 +7,19 @@
     @apply ring-0;
 }
 
+/* Skip link: off-screen until keyboard focus (no layout impact) */
+.skip-link {
+    @apply absolute left-4 -top-full z-50 px-4 py-2 rounded-sm font-semibold text-gray-900 bg-kitgreen-600;
+}
+
+.skip-link:focus {
+    @apply top-4;
+}
+
+#main {
+    scroll-margin-top: 6rem;
+}
+
 /* Hamburger button */
 .hamburger svg > *:nth-child(1),
 .hamburger svg > *:nth-child(2),

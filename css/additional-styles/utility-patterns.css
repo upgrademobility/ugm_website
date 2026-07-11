@@ -81,6 +81,17 @@
     min-height: 48px;
 }
 
+/* Keyboard focus indicators (mouse clicks do not show a ring) */
+.btn:focus-visible,
+.btn-sm:focus-visible,
+.carousel-bullet:focus-visible,
+.carousel-prev:focus-visible,
+.carousel-next:focus-visible,
+.hamburger:focus-visible,
+.text-link:focus-visible {
+    @apply outline-none ring-2 ring-kitgreen-600 ring-offset-2 ring-offset-gray-900;
+}
+
 /* Forms */
 .form-input,
 .form-textarea,

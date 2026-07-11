@@ -99,6 +99,28 @@ function syncSections(filePath) {
   }
 }
 
+function syncAccessibility(content) {
+  let changed = false;
+
+  if (!content.includes('class="skip-link"')) {
+    content = content.replace(
+      /(<body[^>]*>)\s*/,
+      '$1\n    <a href="#main" class="skip-link">Skip to main content</a>\n'
+    );
+    changed = true;
+  }
+
+  if (content.includes('<main class="grow">')) {
+    content = content.replace(
+      /<main class="grow">/g,
+      '<main id="main" class="grow">'
+    );
+    changed = true;
+  }
+
+  return { content, changed };
+}
+
 function syncPartials(filePath, { header, footer }) {
   let content = fs.readFileSync(filePath, "utf8");
   let changed = false;
@@ -133,6 +155,12 @@ function syncPartials(filePath, { header, footer }) {
   if (changed) {
     fs.writeFileSync(filePath, content);
     console.log(`Synced partials in ${path.relative(ROOT, filePath)}`);
+  }
+
+  const accessibility = syncAccessibility(fs.readFileSync(filePath, "utf8"));
+  if (accessibility.changed) {
+    fs.writeFileSync(filePath, accessibility.content);
+    console.log(`Synced accessibility in ${path.relative(ROOT, filePath)}`);
   }
 }
 

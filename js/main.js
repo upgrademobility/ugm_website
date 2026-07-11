@@ -1,9 +1,15 @@
-AOS.init({
-  once: true,
-  disable: 'phone',
-  duration: 600,
-  easing: 'ease-out-sine',
-});
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReducedMotion) {
+  AOS.init({
+    once: true,
+    disable: 'phone',
+    duration: 600,
+    easing: 'ease-out-sine',
+  });
+} else {
+  document.querySelectorAll('[data-aos]').forEach((el) => el.removeAttribute('data-aos'));
+}
 
 function loadSwiper() {
   if (typeof Swiper !== 'undefined') {
