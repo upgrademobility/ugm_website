@@ -69,6 +69,13 @@
     @apply text-kitgreen-300 font-semibold hover:text-kitgreen-600 transition duration-150 ease-in-out;
 }
 
+/* Carousel pagination bullets (48×48px touch target) */
+.carousel-bullet {
+    @apply flex items-center justify-center;
+    min-width: 48px;
+    min-height: 48px;
+}
+
 /* Forms */
 .form-input,
 .form-textarea,

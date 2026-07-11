@@ -221,7 +221,7 @@
                         <template x-for="(item, index) in items" :key="index">
                           <button
                             type="button"
-                            class="p-1 group"
+                            class="carousel-bullet group"
                             @click="active = index; stopAutorotate();"
                             :aria-label="'Go to slide ' + (index + 1) + ' of ' + items.length"
                             :aria-current="active === index ? 'true' : 'false'">
