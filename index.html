@@ -239,7 +239,7 @@
                   </div>
                   <!-- Alpine.js template for slides 2–9: https://github.com/alpinejs/alpine#x-for -->
                   <template x-for="(item, index) in items" :key="index">
-                    <div x-show="active === index" x-if="index !== 0" class="text-center absolute inset-0"
+                    <div x-show="active === index && index !== 0" class="text-center absolute inset-0"
                       x-transition:enter="transition ease-in-out duration-500 transform order-first"
                       x-transition:enter-start="opacity-0 scale-98" x-transition:enter-end="opacity-100 scale-100"
                       x-transition:leave="transition ease-out duration-300 transform absolute"
@@ -247,10 +247,10 @@
                       <div class="relative inline-flex justify-center mb-4 w-full">
                         <picture>
                           <source
-                            :srcset="active === index ? 'images/' + item.img.replace(/\.jpg$/i, '.webp') : null"
+                            :srcset="active === index && index !== 0 ? 'images/' + item.img.replace(/\.jpg$/i, '.webp') : null"
                             type="image/webp" />
                           <img class="w-full rounded-3xl"
-                            :src="active === index ? 'images/' + item.img : null"
+                            :src="active === index && index !== 0 ? 'images/' + item.img : null"
                             width="768" height="432" :alt="item.alt || ''" loading="lazy" />
                         </picture>
                       </div>
