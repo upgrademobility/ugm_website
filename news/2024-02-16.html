@@ -163,7 +163,7 @@
                                                 data-aos-delay="400">
                                                 <a href="https://www.fast.kit.edu/lff/Team_10658.php" target="_blank" rel="noopener noreferrer">
                                                     <img class="rounded-full shrink-0 mr-4"
-                                                        src="../images/news-author-01.jpg" width="40" height="40"
+                                                        src="../images/matthias_vollat.jpg" width="40" height="40"
                                                         alt="Matthias Vollat" />
                                                 </a>
                                                 <div>
@@ -261,16 +261,16 @@
 
                                     </div>
 
-                                    <!-- Carousel area-->
+                                    <!-- Image gallery -->
                                     <div class="">
 
                                         <!-- Carousel -->
                                         <div x-data="carousel" class="mb-8">
 
-                                            <!-- Testimonials -->
-                                            <div class="relative flex items-start" x-ref="testimonials">
+                                            <!-- Image carousel -->
+                                            <div class="relative flex items-start" x-ref="imageCarousel">
 
-                                                <!-- Alpine.js template for testimonials: https://github.com/alpinejs/alpine#x-for -->
+                                                <!-- Alpine.js template for carousel slides: https://github.com/alpinejs/alpine#x-for -->
                                                 <template x-for="(item, index) in items" :key="index">
                                                     <div x-show="active === index" class="text-center"
                                                         x-transition:enter="transition ease-in-out duration-500 transform order-first"
@@ -344,7 +344,7 @@
                                                     },
                                                     heightFix() {
                                                         this.$nextTick(() => {
-                                                            this.$refs.testimonials.style.height = this.$refs.testimonials.children[this.active + 1].offsetHeight + 'px'
+                                                            this.$refs.imageCarousel.style.height = this.$refs.imageCarousel.children[this.active + 1].offsetHeight + 'px'
                                                         })
                                                     }
                                                 }))

@@ -162,7 +162,7 @@
                       <!-- Author meta -->
                       <div class="flex items-center justify-center" data-aos="fade-up" data-aos-delay="400">
                         <a href="https://www.fast.kit.edu/lff/HMI_13265.php" target="_blank" rel="noopener noreferrer">
-                          <img class="rounded-full shrink-0 mr-4" src="../images/news-kurz.jpg" width="40" height="40"
+                          <img class="rounded-full shrink-0 mr-4" src="../images/clemens_kurz.jpg" width="40" height="40"
                             alt="Clemens Kurz" />
                         </a>
                         <div>
@@ -228,16 +228,16 @@
 
                   </div>
 
-                  <!-- Carousel area-->
+                  <!-- Image gallery -->
                   <div class="">
 
                     <!-- Carousel -->
                     <div x-data="carousel" class="mb-8">
 
-                      <!-- Testimonials -->
-                      <div class="relative flex items-start" x-ref="testimonials">
+                      <!-- Image carousel -->
+                      <div class="relative flex items-start" x-ref="imageCarousel">
 
-                        <!-- Alpine.js template for testimonials: https://github.com/alpinejs/alpine#x-for -->
+                        <!-- Alpine.js template for carousel slides: https://github.com/alpinejs/alpine#x-for -->
                         <template x-for="(item, index) in items" :key="index">
                           <div x-show="active === index" class="text-center"
                             x-transition:enter="transition ease-in-out duration-500 transform order-first"

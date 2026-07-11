@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Replace Cruip template placeholder alt text with meaningful descriptions.
+ * Replace legacy placeholder alt text with meaningful descriptions.
  */
 const fs = require("fs");
 const path = require("path");
@@ -28,11 +28,10 @@ const STATIC_REPLACEMENTS = [
   ['alt="Features 01"', 'alt="General information about Graduate School membership"'],
   ['alt="Features 02"', 'alt="Application documents for Graduate School membership"'],
   ['alt="Team member 01"', 'alt="Portrait of Prof. Dr. Eric Sax"'],
-  ['alt="Team member 02"', 'alt="Portrait of Dr.-Ing. Martin Sommer"'],
   ['alt="Team member 03"', 'alt="Portrait of Dipl.-Ing. Eva-Maria Knoch"'],
   ["doctoral reasearcher", "doctoral researcher"],
   ["require-ments", "requirements"],
-  ["<!-- Testimonials -->\n                <div class=\"relative flex items-start aspect-video w-full\" x-ref=\"testimonials\">", "<!-- Hero image carousel -->\n                <div class=\"relative flex items-start aspect-video w-full\" x-ref=\"testimonials\">"],
+  ["<!-- Testimonials -->\n                <div class=\"relative flex items-start aspect-video w-full\" x-ref=\"imageCarousel\">", "<!-- Hero image carousel -->\n                <div class=\"relative flex items-start aspect-video w-full\" x-ref=\"imageCarousel\">"],
 ];
 
 function applyStaticReplacements(content) {

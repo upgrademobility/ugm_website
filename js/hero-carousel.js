@@ -9,11 +9,11 @@ document.addEventListener('alpine:init', () => {
             "alt": "Participants at the third UpGrade Mobility Winter School"
         },
         {
-            "img": "2022-30-11-inner-1.jpg",
+            "img": "2022-11-30-inner-1.jpg",
             "alt": "Participants at the UpGrade Mobility Winter School"
         },
         {
-            "img": "2022-30-11-inner-2.jpg",
+            "img": "2022-11-30-inner-2.jpg",
             "alt": "Workshop session during the UpGrade Mobility Winter School"
         },
         {

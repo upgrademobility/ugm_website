@@ -16,45 +16,44 @@ const FLATTEN_BACKGROUND = { r: 17, g: 24, b: 39 }; // gray-900
 
 // Avatars displayed at 40–48px; optimize at 2x retina.
 const AVATAR_IMAGES = new Set([
-  "news-author-01.jpg",
-  "news-author-02.jpg",
-  "news-kurz.jpg",
-  "testimonial-01.jpg",
-  "testimonial-02.jpg",
-  "testimonial-03.jpg",
+  "matthias_vollat.jpg",
+  "houssem_guissouma.jpg",
+  "clemens_kurz.jpg",
+  "martin_sommer.jpg",
+  "daniel_bogdoll.jpg",
+  "sofie_ehrhardt.jpg",
+  "julia_gandert.jpg",
 ]);
 
 // Members page portraits at 120px; keep at 240px (2x retina).
 const TEAM_MEMBER_IMAGES = new Set([
-  "Sommer.jpg",
-  "team-member-01.jpg",
-  "team-member-02.jpg",
-  "team-member-kurz.jpg",
-  "eva.jpg",
-  "alexandra.jpg",
-  "francesco.jpg",
+  "martin_sommer.jpg",
+  "eric_sax.jpg",
+  "eva_maria_knoch.jpg",
+  "alexandra_nick.jpg",
+  "francesco_pio_urbano.jpg",
 ]);
 
 // Already correctly sized for their largest on-page display (2x retina).
 // Do not recompress or downscale these.
 const SKIP_IMAGES = new Set([
-  "404.jpg",
-  "about-hero.jpg",
-  "members-hero.jpg",
-  "team-mosaic-01.jpg",
-  "team-mosaic-02.jpg",
-  "team-mosaic-03.jpg",
-  "team-mosaic-04.jpg",
+  "error-not-found.jpg",
+  "hero-subpage.jpg",
+  "hero-members.jpg",
+  "winterschool-mosaic-01.jpg",
+  "winterschool-mosaic-02.jpg",
+  "winterschool-mosaic-03.jpg",
+  "winterschool-mosaic-04.jpg",
 ]);
 
 const TAB_IMAGES = new Set([
-  "mapidap.jpg",
+  "topic-design-production.jpg",
   "digital-infra-modeling.jpg",
   "methods-infra-simulation.jpg",
   "information-application-tech.jpg",
   "vehicle-concepts.jpg",
   "propulsion-system.jpg",
-  "ps2.jpg",
+  "topic-production-systems.jpg",
   "lightweight-design.jpg",
   "chassis-body.jpg",
   "electrics-electronics.jpg",
@@ -63,14 +62,14 @@ const TAB_IMAGES = new Set([
 const PNG_HEADERS = new Set([
   "2025-01-20-header.png",
   "2025-03-04-header.png",
-  "2025-05-14_header.png",
+  "2025-05-14-header.png",
 ]);
 
 const UI_PNG = new Set([
-  "application-1.png",
-  "application-2.png",
-  "info.png",
-  "features-03-image-01.png",
+  "application-requirements.png",
+  "application-documents.png",
+  "application-overview.png",
+  "winterschool-2026.png",
 ]);
 
 const conversions = [];
@@ -84,7 +83,7 @@ function isHeaderImage(filename) {
 }
 
 function isPreviewImage(filename) {
-  return /preview/i.test(filename) || /^news-0[123]\.jpg$/i.test(filename);
+  return /preview/i.test(filename);
 }
 
 function isInnerImage(filename) {
