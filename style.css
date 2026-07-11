@@ -1010,6 +1010,24 @@ html {
   background-color: rgb(57 170 227 / var(--tw-bg-opacity));
 }
 
+/* Inline text links in body copy */
+
+.text-link {
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(161 206 200 / var(--tw-text-opacity));
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-link:hover {
+  --tw-text-opacity: 1;
+  color: rgb(92 182 170 / var(--tw-text-opacity));
+}
+
 /* Forms */
 
 .form-input,
@@ -2462,11 +2480,6 @@ input[type=range]::-moz-focus-outer {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(21 23 25 / var(--tw-text-opacity));
-}
-
-.hover\:text-kitgreen-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(92 182 170 / var(--tw-text-opacity));
 }
 
 .hover\:text-kitgreen-700:hover {

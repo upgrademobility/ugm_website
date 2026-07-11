@@ -64,6 +64,11 @@
     @apply bg-kitcyan-950 hover:bg-kitcyan-900;
 }
 
+/* Inline text links in body copy */
+.text-link {
+    @apply text-kitgreen-300 font-semibold hover:text-kitgreen-600 transition duration-150 ease-in-out;
+}
+
 /* Forms */
 .form-input,
 .form-textarea,
