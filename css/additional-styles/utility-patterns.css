@@ -39,6 +39,31 @@
     @apply px-4 py-2;
 }
 
+/* News category tags */
+.news-tag {
+    @apply inline-flex text-center text-gray-900 py-1 px-3 rounded-full transition duration-150 ease-in-out;
+}
+
+.news-tag--winter-school {
+    @apply bg-kitcyan-700 hover:bg-kitcyan-800;
+}
+
+.news-tag--lecture {
+    @apply bg-kitgreen-600 hover:bg-kitgreen-700;
+}
+
+.news-tag--team {
+    @apply bg-kitgreen-900 hover:bg-kitgreen-950;
+}
+
+.news-tag--content {
+    @apply bg-kitcyan-600 hover:bg-kitcyan-700;
+}
+
+.news-tag--think-tank {
+    @apply bg-kitcyan-950 hover:bg-kitcyan-900;
+}
+
 /* Forms */
 .form-input,
 .form-textarea,
