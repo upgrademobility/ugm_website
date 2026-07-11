@@ -68,7 +68,7 @@
                 </li>
                 <li>
                   <a id="application-desktop" class="btn-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 ml-3"
-                    href="/index.html#application_ugm">Application</a>
+                    href="/index.html#application">Application</a>
                 </li>
               </ul>
             </nav>
@@ -110,7 +110,7 @@
                   <li>
                     <a id="application-mobile"
                       class="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 transition duration-150 ease-in-out"
-                      href="/index.html#application_ugm">Application</a>
+                      href="/index.html#application">Application</a>
                   </li>
                 </ul>
               </nav>
@@ -183,7 +183,7 @@
                 <div class="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                   <div data-aos="fade-up" data-aos-delay="600">
                     <a class="btn text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 w-full mb-4 sm:w-auto sm:mb-0"
-                      href="#application_ugm">Apply now</a>
+                      href="#application">Apply now</a>
                   </div>
                   <div data-aos="fade-up" data-aos-delay="800">
                     <a class="btn text-gray-900 bg-gray-200 hover:bg-gray-300 w-full mb-4 sm:w-auto sm:ml-4"
@@ -197,7 +197,8 @@
               </div>
 
               <!-- Carousel -->
-              <div x-data="carousel" class="mb-8">
+              <!-- @section:hero-carousel -->
+              <div x-data="heroCarousel" class="mb-8">
                 <!-- Testimonials -->
                 <div class="relative flex items-start aspect-video w-full" x-ref="testimonials">
                   <!-- Static LCP slide: discoverable in initial HTML before Alpine hydrates -->
@@ -248,57 +249,8 @@
                   </template>
                 </div>
               </div>
-
-              <!-- Carousel data and functionality: https://github.com/alpinejs/alpine -->
-              <script>
-                document.addEventListener("alpine:init", () => {
-                  Alpine.data("carousel", () => ({
-                    active: 0,
-                    autorotate: true,
-                    autorotateTiming: 2500,
-                    items: [
-                      {
-                        img: "2024-11-30-inner-6.jpg",
-                      },
-                      {
-                        img: "2022-30-11-inner-1.jpg",
-                      },
-                      {
-                        img: "2022-30-11-inner-2.jpg",
-                      },
-                      {
-                        img: "2024-04-18-inner-1.jpg",
-                      },
-                      {
-                        img: "2024-04-18-inner-2.jpg",
-                      },
-                      {
-                        img: "2024-04-18-inner-3.jpg",
-                      },
-                      {
-                        img: "2024-04-18-inner-4.jpg",
-                      },
-                      {
-                        img: "2024-04-18-inner-6.jpg",
-                      },
-                    ],
-                    init() {
-                      if (this.autorotate) {
-                        this.autorotateInterval = setInterval(() => {
-                          this.active =
-                            this.active + 1 === this.items.length
-                              ? 0
-                              : this.active + 1;
-                        }, this.autorotateTiming);
-                      }
-                    },
-                    stopAutorotate() {
-                      clearInterval(this.autorotateInterval);
-                      this.autorotateInterval = null;
-                    },
-                  }));
-                });
-              </script>
+              <!-- @end:hero-carousel -->
+              <script src="./js/hero-carousel.js" defer></script>
             </div>
           </div>
         </section>
@@ -613,8 +565,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:left-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/dim.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/dim.jpg" width="516"
+                          <source srcset="./images/digital-infra-modeling.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/digital-infra-modeling.jpg" width="516"
                             height="387" alt="Tabs 02" />
                         </picture>
                       </figure>
@@ -651,8 +603,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:right-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/mis.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/mis.jpg" width="516"
+                          <source srcset="./images/methods-infra-simulation.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/methods-infra-simulation.jpg" width="516"
                             height="387" alt="Tabs 03" />
                         </picture>
                       </figure>
@@ -691,8 +643,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:left-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/iat.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/iat.jpg" width="516"
+                          <source srcset="./images/information-application-tech.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/information-application-tech.jpg" width="516"
                             height="387" alt="Tabs 04" />
                         </picture>
                       </figure>
@@ -732,8 +684,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:right-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/vc.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/vc.jpg" width="516"
+                          <source srcset="./images/vehicle-concepts.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/vehicle-concepts.jpg" width="516"
                             height="387" alt="Tabs 05" />
                         </picture>
                       </figure>
@@ -772,8 +724,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:left-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/ps.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/ps.jpg" width="516"
+                          <source srcset="./images/propulsion-system.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/propulsion-system.jpg" width="516"
                             height="387" alt="Tabs 06" />
                         </picture>
                       </figure>
@@ -848,8 +800,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:left-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/ld.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/ld.jpg" width="516"
+                          <source srcset="./images/lightweight-design.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/lightweight-design.jpg" width="516"
                             height="387" alt="Tabs 08" />
                         </picture>
                       </figure>
@@ -884,8 +836,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:right-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/cb.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/cb.jpg" width="516"
+                          <source srcset="./images/chassis-body.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/chassis-body.jpg" width="516"
                             height="387" alt="Tabs 09" />
                         </picture>
                       </figure>
@@ -921,8 +873,8 @@
                     <article class="relative max-w-md mx-auto md:max-w-none">
                       <figure class="md:absolute md:inset-y-0 md:left-0 md:w-1/2">
                         <picture>
-                          <source srcset="./images/ee.webp" type="image/webp" />
-                          <img class="w-full h-full object-cover" loading="lazy" src="./images/ee.jpg" width="516"
+                          <source srcset="./images/electrics-electronics.webp" type="image/webp" />
+                          <img class="w-full h-full object-cover" loading="lazy" src="./images/electrics-electronics.jpg" width="516"
                             height="387" alt="Tabs 10" />
                         </picture>
                       </figure>
@@ -967,10 +919,11 @@
               </div>
 
               <!-- Carousel built with Swiper.js [https://swiperjs.com/] -->
-              <!-- * Initialized in src/js/main.js -->
-              <!-- * Custom styles in src/css/additional-styles/theme.scss -->
+              <!-- * Initialized in js/main.js -->
+              <!-- * Custom styles in src/css/additional-styles/theme.css -->
               <div class="carousel swiper-container">
                 <div class="swiper-wrapper">
+                  <!-- @section:news-carousel-slides -->
                   <!-- article -->
                   <div class="swiper-slide h-auto flex flex-col max-w-[446px] group">
                     <article class="flex flex-col h-full" data-aos="fade-up" data-aos-delay="200">
@@ -2180,6 +2133,7 @@
                       </footer>
                     </article>
                   </div>
+              <!-- @end:news-carousel-slides -->
                 </div>
 
                 <!-- Arrows -->
@@ -2531,7 +2485,7 @@
         </section>
 
         <!-- Features zigzag -->
-        <section id="application_ugm">
+        <section id="application">
           <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="py-12 md:py-20 border-t border-gray-800">
               <!-- Section header -->
@@ -2788,7 +2742,7 @@
                                   </li>
                                   <li class="mb-1">
                                       <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
-                                          href="/pages/privacy_policy.html" target="_blank" rel="noopener noreferrer">Privacy
+                                          href="/pages/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy
                                           Policy</a>
                                   </li>
                               </ul>

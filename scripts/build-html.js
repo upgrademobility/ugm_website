@@ -71,6 +71,34 @@ function walkHtmlFiles(dir, files = []) {
   return files;
 }
 
+function syncSections(filePath) {
+  let content = fs.readFileSync(filePath, "utf8");
+  let changed = false;
+  const sectionPattern =
+    /<!-- @section:([\w-]+) -->[\s\S]*?<!-- @end:\1 -->/g;
+
+  const sectionEndIndent = {
+    "hero-carousel": "              ",
+    "news-carousel-slides": "                  ",
+  };
+
+  content = content.replace(sectionPattern, (match, name) => {
+    const sectionPath = path.join(SHARED_DIR, "sections", `${name}.html`);
+    if (!fs.existsSync(sectionPath)) {
+      throw new Error(`Missing section partial: shared/sections/${name}.html`);
+    }
+    const sectionContent = fs.readFileSync(sectionPath, "utf8").trimEnd();
+    const endIndent = sectionEndIndent[name] || "              ";
+    changed = true;
+    return `<!-- @section:${name} -->\n${sectionContent}\n${endIndent}<!-- @end:${name} -->`;
+  });
+
+  if (changed) {
+    fs.writeFileSync(filePath, content);
+    console.log(`Synced sections in ${path.relative(ROOT, filePath)}`);
+  }
+}
+
 function syncPartials(filePath, { header, footer }) {
   let content = fs.readFileSync(filePath, "utf8");
   let changed = false;
@@ -111,5 +139,6 @@ function syncPartials(filePath, { header, footer }) {
 const partials = loadPartials();
 
 for (const filePath of walkHtmlFiles(ROOT)) {
+  syncSections(filePath);
   syncPartials(filePath, partials);
 }
