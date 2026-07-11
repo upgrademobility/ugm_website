@@ -1028,6 +1028,16 @@ html {
   color: rgb(92 182 170 / var(--tw-text-opacity));
 }
 
+/* Footer column headings */
+
+.footer-heading {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(217 227 234 / var(--tw-text-opacity));
+}
+
 /* Carousel pagination bullets (48×48px touch target) */
 
 .carousel-bullet {
