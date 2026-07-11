@@ -6,35 +6,35 @@ document.addEventListener('alpine:init', () => {
     items: [
         {
             "img": "2024-11-30-inner-6.jpg",
-            "alt": ""
+            "alt": "Participants at the third UpGrade Mobility Winter School"
         },
         {
             "img": "2022-30-11-inner-1.jpg",
-            "alt": ""
+            "alt": "Participants at the UpGrade Mobility Winter School"
         },
         {
             "img": "2022-30-11-inner-2.jpg",
-            "alt": ""
+            "alt": "Workshop session during the UpGrade Mobility Winter School"
         },
         {
             "img": "2024-04-18-inner-1.jpg",
-            "alt": ""
+            "alt": "Doctoral researchers networking at an UpGrade Mobility event"
         },
         {
             "img": "2024-04-18-inner-2.jpg",
-            "alt": ""
+            "alt": "Group discussion at an UpGrade Mobility graduate school event"
         },
         {
             "img": "2024-04-18-inner-3.jpg",
-            "alt": ""
+            "alt": "Members collaborating at an UpGrade Mobility workshop"
         },
         {
             "img": "2024-04-18-inner-4.jpg",
-            "alt": ""
+            "alt": "Presentation at an UpGrade Mobility graduate school event"
         },
         {
             "img": "2024-04-18-inner-6.jpg",
-            "alt": ""
+            "alt": "Social gathering of UpGrade Mobility doctoral researchers"
         }
     ],
     init() {
