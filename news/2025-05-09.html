@@ -272,8 +272,13 @@
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-98">
                             <div class="relative inline-flex justify-center mb-4">
-                              <img class="w-full" :src="'../images/' + item.img" width="768" height="432"
-                                :alt="item.alt" />
+                              <picture>
+                                <source
+                                  :srcset="'../images/' + item.img.replace(/\.jpg$/i, '.webp')"
+                                  type="image/webp" />
+                                <img class="w-full" :src="'../images/' + item.img" width="768" height="432"
+                                  :alt="item.alt || ''" loading="lazy" />
+                              </picture>
                             </div>
                           </div>
                         </template>
