@@ -49,15 +49,15 @@ const SKIP_IMAGES = new Set([
 
 const TAB_IMAGES = new Set([
   "mapidap.jpg",
-  "dim.jpg",
-  "mis.jpg",
-  "iat.jpg",
-  "vc.jpg",
-  "ps.jpg",
+  "digital-infra-modeling.jpg",
+  "methods-infra-simulation.jpg",
+  "information-application-tech.jpg",
+  "vehicle-concepts.jpg",
+  "propulsion-system.jpg",
   "ps2.jpg",
-  "ld.jpg",
-  "cb.jpg",
-  "ee.jpg",
+  "lightweight-design.jpg",
+  "chassis-body.jpg",
+  "electrics-electronics.jpg",
 ]);
 
 const PNG_HEADERS = new Set([
