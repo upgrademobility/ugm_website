@@ -2,6 +2,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('heroCarousel', () => ({
     active: 0,
     autorotate: true,
+    autorotateDelay: 10000,
     autorotateTiming: 2500,
     items: [
         {
@@ -39,13 +40,17 @@ document.addEventListener('alpine:init', () => {
     ],
     init() {
       if (this.autorotate) {
-        this.autorotateInterval = setInterval(() => {
-          this.active = this.active + 1 === this.items.length ? 0 : this.active + 1;
-        }, this.autorotateTiming);
+        this.autorotateTimeout = setTimeout(() => {
+          this.autorotateInterval = setInterval(() => {
+            this.active = this.active + 1 === this.items.length ? 0 : this.active + 1;
+          }, this.autorotateTiming);
+        }, this.autorotateDelay);
       }
     },
     stopAutorotate() {
+      clearTimeout(this.autorotateTimeout);
       clearInterval(this.autorotateInterval);
+      this.autorotateTimeout = null;
       this.autorotateInterval = null;
     },
   }));
