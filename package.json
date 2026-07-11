@@ -9,7 +9,8 @@
     "dev": "npx tailwindcss -i ./css/style.css -o ./style.css --watch",
     "build": "npx tailwindcss -i ./css/style.css -o ./style.css",
     "optimize-images:phase1": "node scripts/optimize-images-phase1.js",
-    "optimize-images:phase2": "node scripts/optimize-images-phase2.js"
+    "optimize-images:phase2": "node scripts/optimize-images-phase2.js",
+    "optimize-images:phase3": "node scripts/optimize-images-phase3.js"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
