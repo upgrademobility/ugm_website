@@ -108,10 +108,10 @@ function getRule(filename) {
     return null;
   }
 
-  if (filename === "2026-04-08-previewnew.png") {
+  if (filename === "2026-04-08-preview.png") {
     return {
       type: "preview-hero",
-      output: "2026-04-08-previewnew.jpg",
+      output: "2026-04-08-preview.jpg",
       maxWidth: 1600,
       quality: JPEG_QUALITY,
     };

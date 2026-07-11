@@ -1,10 +1,8 @@
 {
-  "name": "open-pro-html",
-  "description": "Open PRO HTML template - Cruip.com",
+  "name": "ugm-website",
+  "description": "Website for KIT Graduate School UpGrade Mobility",
   "version": "1.0.0",
-  "homepage": "https://cruip.com",
-  "author": "Pasquale Vitiello",
-  "license": "https://cruip.com/terms/",
+  "private": true,
   "scripts": {
     "dev": "npx tailwindcss -i ./css/style.css -o ./style.css --watch",
     "build": "npx tailwindcss -i ./css/style.css -o ./style.css --minify",
