@@ -7,9 +7,34 @@ const sharp = require("sharp");
 
 const ROOT = path.join(__dirname, "..");
 const IMAGES_DIR = path.join(ROOT, "images");
-const JPEG_QUALITY = 85;
-const PREVIEW_JPEG_QUALITY = 82;
+const JPEG_QUALITY = 88;
+const PREVIEW_JPEG_QUALITY = 85;
 const FLATTEN_BACKGROUND = { r: 17, g: 24, b: 39 }; // gray-900
+
+// Already correctly sized for their largest on-page display (2x retina).
+// Do not recompress or downscale these.
+const SKIP_IMAGES = new Set([
+  "Sommer.jpg", // 400x400: members page at 120px, news at 40px
+  "news-author-01.jpg",
+  "news-author-02.jpg",
+  "news-kurz.jpg",
+  "testimonial-01.jpg",
+  "testimonial-02.jpg",
+  "testimonial-03.jpg",
+  "team-member-kurz.jpg",
+  "team-member-01.jpg",
+  "team-member-02.jpg",
+  "eva.jpg",
+  "alexandra.jpg",
+  "francesco.jpg",
+  "404.jpg",
+  "about-hero.jpg",
+  "members-hero.jpg",
+  "team-mosaic-01.jpg",
+  "team-mosaic-02.jpg",
+  "team-mosaic-03.jpg",
+  "team-mosaic-04.jpg",
+]);
 
 const TAB_IMAGES = new Set([
   "mapidap.jpg",
@@ -23,30 +48,6 @@ const TAB_IMAGES = new Set([
   "cb.jpg",
   "ee.jpg",
 ]);
-
-const AVATAR_SMALL = new Set([
-  "Sommer.jpg",
-  "news-author-01.jpg",
-  "news-author-02.jpg",
-  "news-kurz.jpg",
-  "testimonial-01.jpg",
-  "testimonial-02.jpg",
-  "testimonial-03.jpg",
-  "team-member-kurz.jpg",
-]);
-
-const AVATAR_LARGE = new Set([
-  "team-member-01.jpg",
-  "team-member-02.jpg",
-  "eva.jpg",
-  "alexandra.jpg",
-  "francesco.jpg",
-  "404.jpg",
-]);
-
-const PAGE_HEROES = new Set(["about-hero.jpg", "members-hero.jpg"]);
-
-const TEAM_MOSAIC = /^team-mosaic-\d+\.jpg$/i;
 
 const PNG_HEADERS = new Set([
   "2025-01-20-header.png",
@@ -80,6 +81,10 @@ function isInnerImage(filename) {
 }
 
 function getRule(filename) {
+  if (SKIP_IMAGES.has(filename)) {
+    return null;
+  }
+
   if (isHeaderImage(filename)) {
     if (PNG_HEADERS.has(filename)) {
       return {
@@ -119,27 +124,11 @@ function getRule(filename) {
   }
 
   if (isInnerImage(filename)) {
-    return { type: "inner", maxWidth: 1408, quality: JPEG_QUALITY };
+    return { type: "inner", maxWidth: 1536, quality: JPEG_QUALITY };
   }
 
   if (TAB_IMAGES.has(filename)) {
     return { type: "tab", maxWidth: 1032, quality: JPEG_QUALITY };
-  }
-
-  if (AVATAR_SMALL.has(filename)) {
-    return { type: "avatar-small", size: 96, quality: JPEG_QUALITY };
-  }
-
-  if (AVATAR_LARGE.has(filename)) {
-    return { type: "avatar-large", size: 240, quality: JPEG_QUALITY };
-  }
-
-  if (PAGE_HEROES.has(filename)) {
-    return { type: "page-hero", maxWidth: 1600, quality: JPEG_QUALITY };
-  }
-
-  if (TEAM_MOSAIC.test(filename)) {
-    return { type: "team-mosaic", maxWidth: 1200, quality: JPEG_QUALITY };
   }
 
   if (UI_PNG.has(filename)) {
@@ -177,17 +166,10 @@ async function optimizeImage(filename) {
 
   let pipeline = sharp(inputPath).rotate();
 
-  if (rule.type === "avatar-small" || rule.type === "avatar-large") {
-    pipeline = pipeline.resize(rule.size, rule.size, {
-      fit: "cover",
-      position: "centre",
-    });
-  } else {
-    pipeline = pipeline.resize({
-      width: rule.maxWidth,
-      withoutEnlargement: true,
-    });
-  }
+  pipeline = pipeline.resize({
+    width: rule.maxWidth,
+    withoutEnlargement: true,
+  });
 
   if (filename.toLowerCase().endsWith(".png")) {
     pipeline = pipeline.flatten({ background: FLATTEN_BACKGROUND });
