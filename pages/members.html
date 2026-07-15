@@ -5,8 +5,14 @@
     <meta charset="utf-8" />
     <title>KIT Graduate School UpGrade Mobility - Members</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link href="../css/vendors/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="../style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700;800;900&display=swap" /></noscript>
+    <link href="../css/vendors/aos.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="../css/vendors/aos.css" rel="stylesheet" /></noscript>
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
@@ -19,37 +25,105 @@
   </head>
 
   <body class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
-    <!-- Page wrapper -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+<!-- Page wrapper -->
     <div class="flex flex-col min-h-screen overflow-hidden">
       <!-- Site header -->
-      <div id="header-placeholder"></div>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          fetch('../shared/header.html')
-            .then(response => response.text())
-            .then(data => {
-              document.getElementById('header-placeholder').innerHTML = data;
-              // Initialize Alpine.js after the header is loaded
-              Alpine.data("handleHeader", () => ({
-                top: true,
-                isTop() {
-                  this.top = window.pageYOffset < 10;
-                },
-                init() {
-                  this.isTop();
-                },
-              }));
-            });
-        });
-      </script>
+      <header class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="siteHeader"
+        @scroll.window="updateScrollState" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !isAtTop }">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="flex items-center justify-between h-16 md:h-24">
+            <!-- Site branding -->
+            <div class="shrink-0 mr-4">
+              <a class="block" href="/index.html" aria-label="KIT">
+                <img class="w-20 sm:w-32 h-auto" src="/images/kit-logo.svg" width="132" height="60" alt="KIT" />
+              </a>
+            </div>
+
+            <!-- Desktop navigation -->
+            <nav class="hidden md:flex md:grow">
+              <ul class="flex grow justify-center flex-wrap items-center">
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/index.html">About</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/index.html#news">News</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/members.html">Members</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/program.html">Program</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/winterschool.html">Winter School</a>
+                </li>
+                <li>
+                  <a id="application-desktop" class="btn-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 ml-3"
+                    href="/index.html#application">Application</a>
+                </li>
+              </ul>
+            </nav>
+
+            <!-- Mobile menu -->
+            <div class="flex md:hidden" x-data="{ expanded: false }">
+              <button class="hamburger" :class="{ 'active': expanded }" @click.stop="expanded = !expanded"
+                aria-controls="mobile-nav" :aria-expanded="expanded">
+                <span class="sr-only">Menu</span>
+                <svg class="w-6 h-6 fill-current text-gray-300 hover:text-gray-200 transition duration-150 ease-in-out"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <rect y="4" width="24" height="2" rx="1" />
+                  <rect y="11" width="24" height="2" rx="1" />
+                  <rect y="18" width="24" height="2" rx="1" />
+                </svg>
+              </button>
+
+              <nav id="mobile-nav"
+                class="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out"
+                x-ref="mobileNav"
+                :style="expanded ? 'max-height: ' + $refs.mobileNav.scrollHeight + 'px; opacity: 1' : 'max-height: 0; opacity: .8'"
+                @click.outside="expanded = false" @keydown.escape.window="expanded = false" x-cloak>
+                <ul class="bg-gray-800 px-4 py-2">
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html">About</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html#news">News</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/members.html">Members</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/program.html">Program</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/winterschool.html">Winter School</a>
+                  </li>
+                  <li>
+                    <a id="application-mobile"
+                      class="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 transition duration-150 ease-in-out"
+                      href="/index.html#application">Application</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+      <script src="../js/site-header.js" defer></script>
 
       <!-- Page content -->
-      <main class="grow">
+      <main id="main" class="grow">
         <!-- Hero -->
         <section class="relative">
           <!-- Background image -->
           <div class="absolute inset-0">
-            <img class="w-full h-full object-cover" src="../images/members-hero.jpg" width="1440" height="394"
+            <img class="w-full h-full object-cover" src="../images/hero-members.jpg" width="1440" height="394"
               alt="About" />
             <div class="absolute inset-0 bg-gray-900 opacity-75" aria-hidden="true"></div>
           </div>
@@ -58,7 +132,7 @@
           <div class="max-w-6xl mx-auto px-4 sm:px-6 relative">
             <div class="pt-32 pb-12 md:pt-40 md:pb-20">
               <div class="max-w-3xl mx-auto text-center">
-                <h3 class="h3 mb-0" data-aos="fade-up">UpGrade Mobility</h3>
+                <p class="h3 mb-0" data-aos="fade-up">UpGrade Mobility</p>
                 <h1 class="h1 mb-4" data-aos="fade-up">
                   Structure and Members
                 </h1>
@@ -75,20 +149,21 @@
               <div class="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <p class="text-xl text-gray-400">
                   The operational management consists of the scientific speaker,
-                  the managing director, elected representatives of the doctorial
-                  reseachers and the topic speakers.
+                  the managing director, elected representatives of the doctoral
+                  researchers and the topic speakers.
                 </p>
               </div>
 
+              <h2 class="sr-only">Operational Management</h2>
               <!-- Team members -->
               <div class="sm:flex sm:flex-wrap sm:justify-center -my-4 sm:-my-8 sm:-mx-3" data-aos-id-team>
                 <!-- 1st member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <img class="rounded-full mb-4" src="../images/team-member-01.jpg" width="120" height="120"
-                      alt="Team member 01" />
-                    <h4 class="text-l font-medium mb-1">Prof. Dr. Eric Sax</h4>
+                    <img class="rounded-full mb-4" src="../images/eric_sax.jpg" width="120" height="120"
+                      alt="Portrait of Prof. Dr. Eric Sax" />
+                    <h3 class="text-l font-medium mb-1">Prof. Dr. Eric Sax</h3>
                     <div class="text-gray-500 mb-1">Scientific Speaker</div>
                     <a class="block text-kitgreen-600 hover:text-gray-200 transition duration-150 ease-in-out"
                       href="https://www.itiv.kit.edu/english/21_3940.php" target="_blank"
@@ -100,11 +175,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up" data-aos-delay="100"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <img class="rounded-full mb-4" src="../images/Sommer.jpg" width="120" height="120"
-                      alt="Team member 02" />
-                    <h4 class="text-l font-medium mb-1">
+                    <img class="rounded-full mb-4" src="../images/martin_sommer.jpg" width="120" height="120"
+                      alt="Portrait of Dr.-Ing. Martin Sommer" />
+                    <h3 class="text-l font-medium mb-1">
                       Dr.-Ing. Martin Sommer
-                    </h4>
+                    </h3>
                     <div class="text-gray-500 mb-1">General Director</div>
                     <a class="block text-kitgreen-600 hover:text-gray-200 transition duration-150 ease-in-out"
                       href="https://www.itiv.kit.edu/21_6289.php" target="_blank" rel="noopener noreferrer">ITIV</a>
@@ -115,11 +190,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up" data-aos-delay="100"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <img class="rounded-full mb-4" src="../images/eva.jpg" width="120" height="120"
-                      alt="Team member 03" />
-                    <h4 class="text-l font-medium mb-1">
+                    <img class="rounded-full mb-4" src="../images/eva_maria_knoch.jpg" width="120" height="120"
+                      alt="Portrait of Dipl.-Ing. Eva-Maria Knoch" />
+                    <h3 class="text-l font-medium mb-1">
                       Dipl.-Ing. Eva-Maria Knoch
-                    </h4>
+                    </h3>
                     <div class="text-gray-500 mb-1">Managing Director</div>
                     <a class="block text-kitgreen-600 hover:text-gray-200 transition duration-150 ease-in-out"
                       href="https://www.fast.kit.edu/lff/Team_Knoch.php" target="_blank"
@@ -131,11 +206,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up" data-aos-delay="200"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <img class="rounded-full mb-4" src="../images/alexandra.jpg" width="120" height="120"
+                    <img class="rounded-full mb-4" src="../images/alexandra_nick.jpg" width="120" height="120"
                       alt="Alexandra Nick" />
-                    <h4 class="text-l font-medium mb-1">
+                    <h3 class="text-l font-medium mb-1">
                       Alexandra Nick, M.Sc.
-                    </h4>
+                    </h3>
                     <div class="text-gray-500 mb-1">
                       Representative of the Members
                     </div>
@@ -148,11 +223,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up" data-aos-delay="300"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <img class="rounded-full mb-4" src="../images/francesco.jpg" width="120" height="120"
+                    <img class="rounded-full mb-4" src="../images/francesco_pio_urbano.jpg" width="120" height="120"
                       alt="Francesco Pio Urbano" />
-                    <h4 class="text-l font-medium mb-1">
+                    <h3 class="text-l font-medium mb-1">
                       Francesco Pio Urbano, M.Eng.
-                    </h4>
+                    </h3>
                     <div class="text-gray-500 mb-1">
                       Representative of the Members
                     </div>
@@ -174,7 +249,7 @@
               <div class="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h2 class="h2 mb-4">Active Members</h2>
                 <p class="text-xl text-gray-400">
-                  We present to you the present (post-)doctoral researchers of
+                  Below are the current (post-)doctoral researchers of
                   the UpGrade Mobility Graduate School, their associated
                   institutes, and their PhD/research topics.
                 </p>
@@ -186,10 +261,10 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/21_7015.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Daniel Baumann</a>
-                    </h4>
+                        class="text-link mb-1">Daniel Baumann</a>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Reconfiguration of context-based vehicle software components in the cloud
@@ -197,14 +272,15 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/21_9717.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Maximilian Beck</a>
-                    </h4>
+                        class="text-link mb-1">Maximilian Beck</a>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Consistency-based testing of cyber-physical systems
@@ -213,63 +289,65 @@
                 </div>
 
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.fast.kit.edu/lff/Team_15936.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Philipp Bühler</a>
-                    </h4>
-                    <p>FAST • 2024 – Present</p>
-                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      Testing Methods for the Simulation and Analysis of Potential Nanomaterial release
-                      during the Life Cycle of Tires
-                    </p>
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.fast.kit.edu/lff/Team_15936.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Philipp Bühler</a>
+                    </h3>
+                    <p>FAST • 2024 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Simulating nanomaterial release from tires over their lifecycle
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://mcse.kastel.kit.edu/staff_927.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Raziyeh Dehghani</a>
-                    </h4>
+                        class="text-link mb-1">Raziyeh Dehghani</a>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Convide: Processes for Consistent CPS Engineering
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.irs.kit.edu/4648.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Lorenz Fehn</a>
-                    </h4>
+                    </h3>
                     <p>IRS • 2026 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      Proactively Addressing Environmental and Sensor Uncertainties in Motion Planning in the Context of
-                      Automated Driving
+                      Motion planning under environmental and sensor uncertainty for automated driving
                     </p>
                   </div>
                 </div>
 
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://dsis.kastel.kit.edu/staff_kevin_feichtinger.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Kevin Feichtinger</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Formalizing and Relating Different Notions of Consistency
@@ -277,15 +355,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://scale.iti.kit.edu/people/adrianfeilhauer" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Adrian Feilhauer</a>
-                    </h4>
+                    </h3>
                     <p>ITI • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Route Selection Algorithms for Improved Traffic Flow
@@ -293,15 +372,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.irs.kit.edu/english/People_4238.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Lars Fischer</a>
-                    </h4>
+                    </h3>
                     <p>IRS • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Trajectories synchronization of highly automated mobile robots
@@ -309,46 +389,49 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.irs.kit.edu/english/3391.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Daniel Flögel</a>
-                    </h4>
+                        class="text-link mb-1">Daniel Flögel</a>
+                    </h3>
                     <p>IRS • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Socially Integrated Navigation: Motion Planning in Crowded Environments
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/21_9832.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Jonas Freyer</a>
-                    </h4>
+                        class="text-link mb-1">Jonas Freyer</a>
+                    </h3>
                     <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-
+                      Validation methods for connected, cooperative and automated mobility
                     </p>
                   </div>
                 </div>
 
 
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/english/21_12048.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Lars Gesmann</a>
-                    </h4>
+                    </h3>
                     <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Consistency in Cross-Generational Engineering of Cyber-Physical Systems
@@ -356,15 +439,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ifv.kit.edu/english/21_1659.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Josephine Grau</a>
-                    </h4>
+                    </h3>
                     <p>IFV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Automated Replication of Dynamic Freeway Control Systems for Traffic Simulations
@@ -372,18 +456,69 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/21_12164.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Patrick Grycz</a>
-                    </h4>
-                    <p>IFV • 2025 – Present</p>
+                    </h3>
+                    <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Validation environments for cyber-physical mobility systems
+                    </p>
+                  </div>
+                </div>
 
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://mcse.kastel.kit.edu/staff_nathan_hagel.php" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Nathan Hagel</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Propagating uncertainty in model-based CPS development
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://tva.kastel.kit.edu/english/team_harter.php" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Morten Harter</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Threat and risk analysis and variability in cyber-physical systems
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.irs.kit.edu/3545.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Manuel Hess</a>
+                    </h3>
+                    <p>IRS • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Comfortable motion planning for automated driving, focusing on motion sickness
                     </p>
                   </div>
                 </div>
@@ -392,103 +527,60 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://mcse.kastel.kit.edu/staff_nathan_hagel.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Nathan Hagel</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://mcse.kastel.kit.edu/staff_bowen_jiang.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Jiang Bowen</a>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      LLM-assisted model transformation languages and DSL engineering
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://tva.kastel.kit.edu/english/team_harter.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Morten Harter</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
-
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.irs.kit.edu/3545.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Manuel Hess</a>
-                    </h4>
-                    <p>IRS • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://mcse.kastel.kit.edu/staff_929.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Jiang Bowen</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
-
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://dsis.kastel.kit.edu/staff_benedikt_jutz.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Benedikt Jutz</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Multi-level modeling for consistent CPS engineering (CONVIDE)
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://dsis.kastel.kit.edu/staff_minakshi_kaushik.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">
                         Minakshi Kaushik</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Association rule mining, machine learning, and model-driven development
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ifab.kit.edu/english/287_2572.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Lina Kluy</a>
-                    </h4>
+                        class="text-link mb-1">Lina Kluy</a>
+                    </h3>
                     <p>IFAB • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Empirical Investigation of Human Behavior, Experience and Information Processing in Intelligent
@@ -497,30 +589,32 @@
                   </div>
                 </div>
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.fast.kit.edu/lff/Team_13650.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Michael König</a>
-                    </h4>
-                    <p>FAST • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.fast.kit.edu/lff/Team_13650.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">
+                        Michael König</a>
+                    </h3>
+                    <p>FAST • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Sustainable vehicle and mobility concepts for municipal energy transition
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/200_8238.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">David Kraus</a>
-                    </h4>
+                        class="text-link mb-1">David Kraus</a>
+                    </h3>
                     <p>ITIV • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Automotive edge computing using service-oriented architecture to outsource safety-critical
@@ -529,62 +623,66 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.linkedin.com/in/jakob-krenn/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://netze.econ.kit.edu/21_1304.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">
                         Jakob Krenn</a>
-                    </h4>
+                    </h3>
                     <p>ECON • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Transport and network economics
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://dsis.kastel.kit.edu/staff_arne_lange.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Arne Lange</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Multi-level modeling and deep instantiation for consistent CPS engineering
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fast.kit.edu/lff/HMI_17413.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Luca Lanz</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      User-centered vehicle concepts
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://ae.iti.kit.edu/english/4255.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Moritz Laupichler</a>
-                    </h4>
+                        class="text-link mb-1">Moritz Laupichler</a>
+                    </h3>
                     <p>ITI • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Route planning in road graphs
@@ -594,15 +692,16 @@
 
 
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/21_9452.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Nikola Lukezic</a>
-                    </h4>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Adaptive Methods of Collective Perception for Increased Safety in Driving Scenarios
@@ -610,15 +709,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/200_8169.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Vitus Lüntzel</a>
-                    </h4>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Context-aware incremental quality analyses for cyber-physical systems
@@ -626,78 +726,83 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.ifgg.kit.edu/mitarbeiter_4206.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">
                         Jana Mayer</a>
-                    </h4>
+                    </h3>
                     <p>ifGG • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Socially equitable everyday mobility in urban and rural Baden-Württemberg
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://dsis.kastel.kit.edu/staff_muhammad_minhas.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Muhammad Minhas</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      View-based modeling for consistent CPS engineering
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/21_7718.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Ann-Therese Nägele</a>
-                    </h4>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      ML-supported requirements engineering and continuous testing of automotive and robotic services
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://tva.kastel.kit.edu/english/team_neumann.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Dirk Neumann</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Consistency and feature modeling for software-intensive systems
+                    </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ifab.kit.edu/english/287_2936.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Alexandra Nick</a>
-                    </h4>
+                        class="text-link mb-1">Alexandra Nick</a>
+                    </h3>
                     <p>IFAB • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Ergonomics of Teleoperation for Automated Vehicles - Requirements, Tasks, and Challenges for
@@ -706,30 +811,32 @@
                   </div>
                 </div>
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://tva.kastel.kit.edu/english/team_ochs.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Philip Ochs</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://tva.kastel.kit.edu/english/team_ochs.php" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Philip Ochs</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Consistency of software product lines across problem and solution space
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fzi.de/team/hubert-padusinski/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Hubert Padusinski</a>
-                    </h4>
+                        class="text-link mb-1">Hubert Padusinski</a>
+                    </h3>
                     <p>FZI • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Validation of machine vision functions for highly automated driving systems
@@ -737,47 +844,49 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://logic.kastel.kit.edu/team/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Promit Panja</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://logic.kastel.kit.edu/research/" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Promit Panja</a>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      Consistency of data-defined models for modeling and verification of safety specifications of
-                      cyber-physical systems
+                      Correct-by-construction safety verification of cyber-physical systems
                     </p>
                   </div>
                 </div>
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://formal.kastel.kit.edu/~pascual/?lang=de" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Romain Pascual</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://formal.kastel.kit.edu/~pascual/?lang=de" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Romain Pascual</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Formal foundations of consistency in model-driven CPS engineering
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://tva.kastel.kit.edu/english/team_pett.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Tobias Pett</a>
-                    </h4>
+                    </h3>
                     <p>KASTEL • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Convide: Consistency in the View-Based Development of Cyber-Physical Systems
@@ -785,16 +894,17 @@
                   </div>
                 </div>
 
+
               
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.irs.kit.edu/english/3888.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Ben-Micha Piscol</a>
-                    </h4>
+                        class="text-link mb-1">Ben-Micha Piscol</a>
+                    </h3>
                     <p>IRS • 2023 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Validation of learning methods for trajectory following
@@ -803,15 +913,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.iip.kit.edu/english/86_6969.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Moritz Raab</a>
-                    </h4>
+                    </h3>
                     <p>IIP • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Impact of Innovative Mobility Concepts on Local Energy Systems
@@ -821,14 +932,15 @@
 
 
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fzi.de/team/joshua-ransiek/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Joshua Ransiek</a>
-                    </h4>
+                        class="text-link mb-1">Joshua Ransiek</a>
+                    </h3>
                     <p>FZI • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Automation of software tests through the use of reinforcement learning
@@ -836,14 +948,15 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fzi.de/team/philipp-reis/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Philipp Reis</a>
-                    </h4>
+                        class="text-link mb-1">Philipp Reis</a>
+                    </h3>
                     <p>FZI • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Real-time analysis of driving operations
@@ -851,44 +964,48 @@
                   </div>
                 </div>
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Christian Sand</a>
-                    </h4>
-                    <p>ECON • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.ipek.kit.edu/21_13929.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Anian Scheibel</a>
-                    </h4>
-                    <p>IPEK • 2026 – Present</p>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://netze.econ.kit.edu/21_1305.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">
+                        Christian Sand</a>
+                    </h3>
+                    <p>ECON • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
+                      European transport planning and modelling
                     </p>
                   </div>
                 </div>
+
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.ipek.kit.edu/21_13929.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Anian Scheibel</a>
+                    </h3>
+                    <p>IPEK • 2026 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Uncertainty in automated-driving perception chains and safety of AI-heavy AD stacks
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/stefanschlaefle/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Stefan Schläfle</a>
-                    </h4>
+                        class="text-link mb-1">Stefan Schläfle</a>
+                    </h3>
                     <p>FAST • 2021 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Influence of Vehicle operating conditions on tire-road
@@ -897,15 +1014,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fast.kit.edu/lff/Automatisierung_15902.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Timon Schlögl</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2024 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       AI-Based Vehicle Performance and Road Condition Prediction
@@ -913,14 +1031,15 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/english/21_8717.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Luca Seidel</a>
-                    </h4>
+                        class="text-link mb-1">Luca Seidel</a>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Online Confidence Assessment of Sensor-Based Automated Driving Functions
@@ -928,31 +1047,33 @@
                   </div>
                 </div>
 
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://dsis.kastel.kit.edu/staff_rahul_sharma.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Rahul Sharma</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://dsis.kastel.kit.edu/staff_rahul_sharma.php" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Rahul Sharma</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Consistency benchmarks and verification for cyber-physical systems
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fast.kit.edu/lff/Automatisierung_14422.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        rel="noopener noreferrer" class="text-link mb-1">
                         Kevin Simon</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Improved detection of emergency vehicles through autonomous vehicles
@@ -960,50 +1081,37 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.fast.kit.edu/lff/Team_14665.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Marius Staat</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2026 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
+                      Tire–road interaction and performance-oriented pavement surfaces
                     </p>
                   </div>
                 </div>
+
 
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.itiv.kit.edu/21_10345.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Georgios Sotiropoulos</a>
-                    </h4>
+                    </h3>
                     <p>ITIV • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
+                      Fault-tolerant AI hardware and accelerators for safety-critical applications
                     </p>
-                  </div>
-                </div>
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://formal.kastel.kit.edu/~stuebinger/?lang=en" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
-                        Terru Stübinger</a>
-                    </h4>
-                    <p>KASTEL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
                   </div>
                 </div>
 
@@ -1011,11 +1119,28 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://formal.kastel.kit.edu/~stuebinger/?lang=en" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">
+                        Terru Stübinger</a>
+                    </h3>
+                    <p>KASTEL • 2025 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Formalizing consistency in model-driven engineering (Convide)
+                    </p>
+                  </div>
+                </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/english/21_9589.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Carsten Thümmel</a>
-                    </h4>
+                    </h3>
                     <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Monitoring between Strategic Foresight and Product Engineering
@@ -1023,15 +1148,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/english/21_12059.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Francesco Urbano</a>
-                    </h4>
+                    </h3>
                     <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Experimental and model-based analysis of particulate matter emissions from dry-running friction
@@ -1040,15 +1166,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ipek.kit.edu/english/21_12970.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Thomas Völk</a>
-                    </h4>
+                    </h3>
                     <p>IPEK • 2025 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Methods and Processes for Agile Interdisciplinary Design through Consistency in the Product
@@ -1057,41 +1184,39 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.ifl.kit.edu/english/5978_6347.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">
+                        class="text-link mb-1">
                         Michael Walz</a>
-                    </h4>
+                    </h3>
                     <p>IFL • 2025 – Present</p>
-                    <!-- <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
-                    </p> -->
-                  </div>
-                </div>
-
-
-                <!-- Member -->
-                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
-                  data-aos-anchor="[data-aos-id-team]">
-                  <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.fast.kit.edu/bst/930_15558.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Patrick Ziesel</a>
-                    </h4>
-                    <p>FAST• 2026 – Present</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      TBD
+                      Analytical throughput models for automated warehouse and logistics systems
                     </p>
                   </div>
                 </div>
 
-              </div>
-            </div>
-          </div>
+
+
+                <!-- Member -->
+                <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
+                  data-aos-anchor="[data-aos-id-team]">
+                  <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.fast.kit.edu/bst/930_15558.php" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Patrick Ziesel</a>
+                    </h3>
+                    <p>FAST • 2026 – Present</p>
+                    <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
+                      Wireless charging infrastructure for public transport vehicles
+                    </p>
+                  </div>
+                </div></div>
         </section>
 
 
@@ -1111,53 +1236,56 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/danielbogdoll/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Daniel Bogdoll</a>
-                    </h4>
+                        class="text-link mb-1">Daniel Bogdoll</a>
+                    </h3>
                     <p>AIFB • 2021 – 2025</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Anomaly Detection for Autonomous Driving
                     </p>
                   </div>
                 </div>
+
                   <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.linkedin.com/in/cbohnkit " target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Christopher Bohn</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.linkedin.com/in/cbohnkit" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Christopher Bohn</a>
+                    </h3>
                     <p>IRS • 2021 – 2025</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      Berechnung garantiert erreichbarer Zustandsmengen für die Bewegungsplanung hochautomatisierter Fahrzeuge
+                      Computing guaranteed reachable state sets for motion planning of highly automated vehicles
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/sofie-ehrhardt-b054aa29a/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Sofie
+                        rel="noopener noreferrer" class="text-link mb-1">Sofie
                         Ehrhardt</a>
-                    </h4>
+                    </h3>
                     <p>IFAB • 2021 – 2024</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Please let me merge – Communication during lane changes on motorway slip roads
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.tvt.kit.edu/21_3702.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Julia Gandert</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.linkedin.com/in/julia-gandert-9546561ba" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Julia Gandert</a>
+                    </h3>
                     <p>TVT • 2022 – 2026</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Investigation of the Influence of the Production Parameters on the Thermal Transport in Electrodes
@@ -1165,30 +1293,32 @@
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://dol.ior.kit.edu/english/Team_744.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Esther Linner</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.linkedin.com/in/elinner" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Esther Linner</a>
+                    </h3>
                     <p>IOR • 2022 – 2025</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
-                      Simulation based optimizaion approaches for last mile
+                      Simulation based optimization approaches for last mile
                       services
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/lukas-michiels-36b0a9176/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Lukas
+                        rel="noopener noreferrer" class="text-link mb-1">Lukas
                         Michiels</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2021 – 2024</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Automation of mobile machines
@@ -1200,10 +1330,10 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.ipek.kit.edu/english/21_7625.php" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Felix Pfaff</a>
-                    </h4>
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.linkedin.com/in/felix-pfaff-b35571184" target="_blank" rel="noopener noreferrer"
+                        class="text-link mb-1">Felix Pfaff</a>
+                    </h3>
                     <p>IPEK • 2021 – 2025</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Evolutionary principles supporting synthesis of future
@@ -1211,30 +1341,32 @@
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
-                      <a href="https://www.iam.kit.edu/et/english/mitarbeiter_5352.php" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Sebastian
+                    <h3 class="text-xl font-medium mb-1">
+                      <a href="https://www.linkedin.com/in/sebastian-raab-h2" target="_blank"
+                        rel="noopener noreferrer" class="text-link mb-1">Sebastian
                         Raab</a>
-                    </h4>
+                    </h3>
                     <p>IAM • 2021 – 2026</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Modeling and characterization of PEM fuel cells
                     </p>
                   </div>
                 </div>
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/silvan-scheuermann-788666196/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Silvan
+                        rel="noopener noreferrer" class="text-link mb-1">Silvan
                         Scheuermann</a>
-                    </h4>
+                    </h3>
                     <p>ETI • 2021 – 2024</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Measurement and upgrading of motor windings for use with
@@ -1247,11 +1379,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/tobias-schulz-kit/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Tobias
+                        class="text-link mb-1">Tobias
                         Schulz</a>
-                    </h4>
+                    </h3>
                     <p>FAST • 2021 – 2023</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Application of machine learning methods in the condition
@@ -1264,11 +1396,11 @@
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/dominik-stepien-b005352b9/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Dominik
+                        rel="noopener noreferrer" class="text-link mb-1">Dominik
                         Stepien</a>
-                    </h4>
+                    </h3>
                     <p>HIU • 2021 – 2023</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Synthesis and development of electrolyte systems based on
@@ -1277,14 +1409,15 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/po-hua-su-3867079a/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Po-Hua Su</a>
-                    </h4>
+                        rel="noopener noreferrer" class="text-link mb-1">Po-Hua Su</a>
+                    </h3>
                     <p>HIU • 2021 – 2024</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Development of polymeric active materials for rechargeable
@@ -1293,15 +1426,16 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/claude-weyland-159721132/" target="_blank"
-                        rel="noopener noreferrer" class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Claude
+                        rel="noopener noreferrer" class="text-link mb-1">Claude
                         Weyland</a>
-                    </h4>
+                    </h3>
                     <p>IFV • 2021 – 2023</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Modeling of freeways with dynamic freeway control system
@@ -1309,73 +1443,180 @@
                   </div>
                 </div>
 
+
                 <!-- Member -->
                 <div class="sm:w-1/2 md:w-1/3 lg:w-1/4 py-4 sm:py-8 sm:px-3" data-aos="fade-up"
                   data-aos-anchor="[data-aos-id-team]">
                   <div class="flex flex-col items-center">
-                    <h4 class="text-xl font-medium mb-1">
+                    <h3 class="text-xl font-medium mb-1">
                       <a href="https://www.linkedin.com/in/xuexilai/" target="_blank" rel="noopener noreferrer"
-                        class="text-kitgreen-300 hover:text-kitgreen-600 mb-1">Xilai Xue</a>
-                    </h4>
+                        class="text-link mb-1">Xilai Xue</a>
+                    </h3>
                     <p>HIU • 2021 – 2024</p>
                     <p class="block text-gray-500 transition duration-150 ease-in-out text-center">
                       Development of alternative anode materials for rechargeable batteries
                     </p>
                   </div>
-                </div>
-
-
-
-              </div>
-            </div>
-          </div>
+                </div></div>
         </section>
 
       </main>
 
       <!-- Site footer -->
-      <script>
-        fetch("../shared/footer.html")
-          .then((response) => response.text())
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const footer = doc.getElementById("footer");
+      <footer id="footer">
+          <div class="py-12 md:py-16">
+              <div class="max-w-6xl mx-auto px-4 sm:px-6">
 
-            // Append the footer to the body of the destination document
-            document.body.appendChild(footer);
-          });
-      </script>
-    </div>
+                  <!-- Top area: Blocks -->
+                  <div class="grid md:grid-cols-12 gap-8 lg:gap-20 mb-8 md:mb-12">
 
+                      <!-- 1st block -->
+                      <div class="md:col-span-4 lg:col-span-5">
+
+                          <div class="text-gray-400">Funded by the Federal Ministry of Education and Research (BMBF)
+                              and the Baden-Württemberg Ministry of Science as part of the Excellence Strategy of the
+                              German Federal and State Governments.</div>
+                      </div>
+
+                      <!-- 2nd, 3rd and 4th blocks -->
+                      <div class="md:col-span-8 lg:col-span-7 grid grid-cols-2 gap-8">
+
+                          <!-- 2nd block -->
+                          <div class="text-sm">
+                              <h2 class="footer-heading">Imprint</h2>
+                              <ul>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.kit.edu/english/" target="_blank"
+                                          rel="noopener noreferrer">Home</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.mobilitaetssysteme.kit.edu/legals.php" target="_blank"
+                                          rel="noopener noreferrer">Imprint</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="/pages/privacy-policy.html">Privacy
+                                          Policy</a>
+                                  </li>
+                              </ul>
+                          </div>
+
+                          <!-- 4th block -->
+                          <div class="text-sm">
+                              <h2 class="footer-heading">Mobility Projects</h2>
+                              <ul>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.mobilitaetssysteme.kit.edu/" target="_blank"
+                                          rel="noopener noreferrer">Mobility Systems Center
+                                      </a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.icm-bw.de/en/" target="_blank"
+                                          rel="noopener noreferrer">Innovation
+                                          Campus Future Mobility</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.kamo.one/en/welcome/" target="_blank"
+                                          rel="noopener noreferrer">Karlsruhe Mobility HPC</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://taf-bw.de/en/" target="_blank" rel="noopener noreferrer">Test
+                                          Area Autonomous Driving BW
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Bottom area -->
+                  <div class="md:flex md:items-center md:justify-between">
+                      <!-- Social links -->
+                      <ul class="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+                          <li>
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://linkedin.com/company/upgrade-mobility-grad-kit" target="_blank"
+                                  rel="noopener noreferrer" aria-label="LinkedIn">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path
+                                          d="M23.3 8H8.7c-.4 0-.7.3-.7.7v14.7c0 .3.3.6.7.6h14.7c.4 0 .7-.3.7-.7V8.7c-.1-.4-.4-.7-.8-.7zM12.7 21.6h-2.3V14h2.4v7.6h-.1zM11.6 13c-.8 0-1.4-.7-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4-.1.7-.7 1.4-1.4 1.4zm10 8.6h-2.4v-3.7c0-.9 0-2-1.2-2s-1.4 1-1.4 2v3.8h-2.4V14h2.3v1c.3-.6 1.1-1.2 2.2-1.2 2.4 0 2.8 1.6 2.8 3.6v4.2h.1z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://x.com/KITKarlsruhe" target="_blank" rel="noopener noreferrer"
+                                  aria-label="X">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path
+                                          d="m13.063 9 3.495 4.475L20.601 9h2.454l-5.359 5.931L24 23h-4.938l-3.866-4.893L10.771 23H8.316l5.735-6.342L8 9h5.063Zm-.74 1.347h-1.457l8.875 11.232h1.36l-8.778-11.232Z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://www.instagram.com/kitkarlsruhe/" target="_blank" rel="noopener noreferrer"
+                                  aria-label="Instagram">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <circle cx="20.145" cy="11.892" r="1" />
+                                      <path
+                                          d="M16 20c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm0-6c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z" />
+                                      <path
+                                          d="M20 24h-8c-2.056 0-4-1.944-4-4v-8c0-2.056 1.944-4 4-4h8c2.056 0 4 1.944 4 4v8c0 2.056-1.944 4-4 4zm-8-14c-.935 0-2 1.065-2 2v8c0 .953 1.047 2 2 2h8c.935 0 2-1.065 2-2v-8c0-.935-1.065-2-2-2h-8z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://www.youtube.com/user/KITVideoclips" target="_blank" rel="noopener noreferrer"
+                                  aria-label="YouTube">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path transform="translate(8,8)"
+                                          d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                                  </svg>
+                              </a>
+                          </li>
+                      </ul>
+
+                      <!-- Copyrights note -->
+                      <div class="text-gray-400 text-sm mr-4">KIT – The Research University in the Helmholtz
+                          Association.
+                      </div>
+
+                  </div>
+
+              </div>
+          </div>
+      </footer>
+</div>
+
+    <script src="../js/vendors/aos.js" defer></script>
+    <script src="../js/main.js" defer></script>
     <script src="../js/vendors/alpinejs.min.js" defer></script>
-    <script src="../js/vendors/aos.js"></script>
-    <script src="../js/vendors/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
 
-    <script>
-      (function ($) {
-        $("a[href^=mailto]").each(function () {
-          var href = $(this).attr("href");
-          $(this).click(function () {
-            var t;
-            var self = $(this);
-
-            $(window).blur(function () {
-              // The browser apparently responded, so stop the timeout.
-              clearTimeout(t);
-            });
-
-            t = setTimeout(function () {
-              // The browser did not respond after 500ms, so open an alternative URL.
-              // document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
-              alert(
-                "No email client was detected. Please apply via upgrademobility@kit.edu."
-              );
-            }, 1000);
-          });
+<script>
+      document.querySelectorAll('a[href^="mailto"]').forEach(function (link) {
+        link.addEventListener('click', function () {
+          var timer;
+          var onBlur = function () {
+            clearTimeout(timer);
+            window.removeEventListener('blur', onBlur);
+          };
+          window.addEventListener('blur', onBlur);
+          timer = setTimeout(function () {
+            window.removeEventListener('blur', onBlur);
+            alert(
+              'No email client was detected. Please apply via upgrademobility@kit.edu.'
+            );
+          }, 1000);
         });
-      })(jQuery);
+      });
     </script>
   </body>
 

@@ -5,8 +5,14 @@
     <meta charset="utf-8" />
     <title>KIT Graduate School UpGrade Mobility - Winter School</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link href="../css/vendors/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="../style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700;800;900&display=swap" /></noscript>
+    <link href="../css/vendors/aos.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="../css/vendors/aos.css" rel="stylesheet" /></noscript>
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
@@ -19,53 +25,105 @@
   </head>
 
   <body class="font-inter antialiased bg-gray-900 text-gray-200 tracking-tight">
-    <!-- Page wrapper -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+<!-- Page wrapper -->
     <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
       <!-- Site header -->
-      <div id="header-placeholder"></div>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          fetch('../shared/header.html')
-            .then(response => response.text())
-            .then(data => {
-              document.getElementById('header-placeholder').innerHTML = data;
+      <header class="fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out" x-data="siteHeader"
+        @scroll.window="updateScrollState" :class="{ 'bg-black backdrop-blur-sm shadow-lg' : !isAtTop }">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="flex items-center justify-between h-16 md:h-24">
+            <!-- Site branding -->
+            <div class="shrink-0 mr-4">
+              <a class="block" href="/index.html" aria-label="KIT">
+                <img class="w-20 sm:w-32 h-auto" src="/images/kit-logo.svg" width="132" height="60" alt="KIT" />
+              </a>
+            </div>
 
-              // Initialize Alpine.js after the header is loaded
-              Alpine.data("handleHeader", () => ({
-                top: true,
-                isTop() {
-                  this.top = window.pageYOffset < 10;
-                },
-                init() {
-                  this.isTop();
-                },
-              }));
+            <!-- Desktop navigation -->
+            <nav class="hidden md:flex md:grow">
+              <ul class="flex grow justify-center flex-wrap items-center">
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/index.html">About</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/index.html#news">News</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/members.html">Members</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/program.html">Program</a>
+                </li>
+                <li>
+                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/pages/winterschool.html">Winter School</a>
+                </li>
+                <li>
+                  <a id="application-desktop" class="btn-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 ml-3"
+                    href="/index.html#application">Application</a>
+                </li>
+              </ul>
+            </nav>
 
-              // Change the button style and link for the application button
-              const desktopButton = document.getElementById('application-desktop');
-              if (desktopButton) {
-                desktopButton.classList.remove('bg-kitgreen-600', 'hover:bg-kitgreen-700');
-                desktopButton.classList.add('bg-kitcyan-600', 'hover:bg-kitcyan-700');
-                desktopButton.href = '#application_winterschool';
-              }
+            <!-- Mobile menu -->
+            <div class="flex md:hidden" x-data="{ expanded: false }">
+              <button class="hamburger" :class="{ 'active': expanded }" @click.stop="expanded = !expanded"
+                aria-controls="mobile-nav" :aria-expanded="expanded">
+                <span class="sr-only">Menu</span>
+                <svg class="w-6 h-6 fill-current text-gray-300 hover:text-gray-200 transition duration-150 ease-in-out"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <rect y="4" width="24" height="2" rx="1" />
+                  <rect y="11" width="24" height="2" rx="1" />
+                  <rect y="18" width="24" height="2" rx="1" />
+                </svg>
+              </button>
 
-              const button = document.getElementById('application-mobile');
-              if (button) {
-                button.classList.remove('bg-kitgreen-600', 'hover:bg-kitgreen-700');
-                button.classList.add('bg-kitcyan-600', 'hover:bg-kitcyan-700');
-                button.href = '#application_winterschool';
-              }
-            });
-        });
-      </script>
+              <nav id="mobile-nav"
+                class="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out"
+                x-ref="mobileNav"
+                :style="expanded ? 'max-height: ' + $refs.mobileNav.scrollHeight + 'px; opacity: 1' : 'max-height: 0; opacity: .8'"
+                @click.outside="expanded = false" @keydown.escape.window="expanded = false" x-cloak>
+                <ul class="bg-gray-800 px-4 py-2">
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html">About</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html#news">News</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/members.html">Members</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/program.html">Program</a>
+                  </li>
+                  <li>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/pages/winterschool.html">Winter School</a>
+                  </li>
+                  <li>
+                    <a id="application-mobile"
+                      class="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 transition duration-150 ease-in-out"
+                      href="/index.html#application">Application</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+      <script src="../js/site-header.js" defer></script>
 
       <!-- Page content -->
-      <main class="grow">
+      <main id="main" class="grow">
         <!-- Hero -->
         <section class="relative">
           <!-- Background image -->
           <div class="absolute inset-0">
-            <img class="w-full h-full object-cover" src="../images/about-hero.jpg" width="1440" height="394"
+            <img class="w-full h-full object-cover" src="../images/hero-subpage.jpg" width="1440" height="394"
               alt="About" />
             <div class="absolute inset-0 bg-gray-900 opacity-75" aria-hidden="true"></div>
           </div>
@@ -74,7 +132,7 @@
           <div class="max-w-6xl mx-auto px-4 sm:px-6 relative">
             <div class="pt-32 pb-12 md:pt-40 md:pb-20">
               <div class="max-w-3xl mx-auto text-center">
-                <h3 class="h3 mb-0" data-aos="fade-up">UpGrade Mobility</h3>
+                <p class="h3 mb-0" data-aos="fade-up">UpGrade Mobility</p>
                 <h1 class="h1 mb-4" data-aos="fade-up">Winter School</h1>
 
                 <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
@@ -86,7 +144,7 @@
               <div class="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                 <!-- Hide the "Apply Now" button -->
                 <!-- <div data-aos="fade-up" data-aos-delay="600">
-                                    <a class="btn text-white bg-kitgreen-600 hover:bg-kitgreen-700 w-full mb-4 sm:w-auto sm:mb-0"
+                                    <a class="btn text-gray-900 bg-kitgreen-600 hover:bg-kitgreen-700 w-full mb-4 sm:w-auto sm:mb-0"
                                         href="#application_winterschool">Apply now</a>
                             </div> -->
                 <div data-aos="fade-up" data-aos-delay="600">
@@ -104,19 +162,19 @@
             <div class="max-w-3xl mx-auto">
               <div class="relative w-full h-0 pb-3/4">
                 <figure class="absolute h-auto" style="top: 45%; width: 41.67%; max-width: 320px" data-aos="fade-right">
-                  <img src="../images/team-mosaic-02.jpg" width="320" height="240" alt="Team mosaic 02" />
+                  <img src="../images/winterschool-mosaic-02.jpg" width="320" height="240" alt="Winter School group activity" />
                 </figure>
                 <figure class="relative mx-auto h-auto" style="width: 78.13%; max-width: 600px" data-aos="fade-down"
                   data-aos-delay="100">
-                  <img src="../images/team-mosaic-01.jpg" width="600" height="338" alt="Team mosaic 01" />
+                  <img src="../images/winterschool-mosaic-01.jpg" width="600" height="338" alt="Winter School participants at KIT" />
                 </figure>
                 <figure class="absolute h-auto" style="top: 8.5%; right: 0; width: 32.55%; max-width: 250px"
                   data-aos="fade-left" data-aos-delay="200">
-                  <img src="../images/team-mosaic-03.jpg" width="250" height="188" alt="Team mosaic 03" />
+                  <img src="../images/winterschool-mosaic-03.jpg" width="250" height="188" alt="Winter School workshop session" />
                 </figure>
                 <figure class="absolute h-auto" style="bottom: 0; right: 20%; width: 25.52%; max-width: 196px"
                   data-aos="fade-up" data-aos-delay="300">
-                  <img src="../images/team-mosaic-04.jpg" width="196" height="196" alt="Team mosaic 04" />
+                  <img src="../images/winterschool-mosaic-04.jpg" width="196" height="196" alt="Winter School networking" />
                 </figure>
               </div>
             </div>
@@ -129,7 +187,7 @@
             <div class="py-12 md:py-20">
               <!-- Section header -->
               <div class="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                <h1 class="h2 mb-4">About the Winter School</h1>
+                <h2 class="h2 mb-4">About the Winter School</h2>
                 <p class="text-xl text-gray-400">
                   The UpGrade Mobility Graduate School Winter School is the
                   annual networking event of the KIT Mobility Systems Center.
@@ -191,25 +249,24 @@
                   <div
                     class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1"
                     data-aos="fade-up">
-                    <img class="max-w-full mx-auto md:max-w-none h-auto" src="../images/features-03-image-01.png"
-                      width="540" height="405" alt="Features 01" />
+                    <img class="max-w-full mx-auto md:max-w-none h-auto" src="../images/winterschool-2026.jpg"
+                      width="540" height="405" alt="UpGrade Mobility Winter School at KIT" />
                   </div>
 
                   <!-- Content -->
                   <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
                     data-aos="fade-right">
                     <div class="md:pr-4 lg:pr-12 xl:pr-16">
-                      <h3 id="current-edition" class="h3 mb-3">2026 Edition: 23rd through 27th of November "Future of
-                        public transport"</h3>
+                      <h3 id="current-edition" class="h3 mb-3">2026 Edition: 23rd through 27th of November — Future Public Transport</h3>
                       <p class="text-xl text-gray-400 mb-4">
-                        Follow us on <a class="text-kitgreen-300 hover:text-kitgreen-600"
+                        Follow us on <a class="text-link"
                           href="https://linkedin.com/company/upgrade-mobility-grad-kit" target="_blank"
                           rel="noopener noreferrer">LinkedIn</a> for
                         updates.
                       </p>
 
 
-                      <!--<a class="btn-sm text-white bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
+                      <!--<a class="btn-sm text-gray-900 bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
                         href="../docs/Winter_School_2024-11_Schedule.pdf" target="_blank">
                         <span class="text-sm">Schedule</span>
                         <svg class="w-3 h-3 fill-current text-kitcyan-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -218,7 +275,7 @@
                         </svg></a> -->
 
                       <!-- <br /> -->
-                      <!-- <a class="btn-sm text-white bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
+                      <!-- <a class="btn-sm text-gray-900 bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
                         href="../docs/Workshop_Description.pdf" target="_blank">
                         <span class="text-sm">Workshop Description</span>
                         <svg class="w-3 h-3 fill-current text-kitcyan-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -228,7 +285,7 @@
 
                       <!-- <br /> -->
                       <!--
-                      <a class="btn-sm text-white bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
+                      <a class="btn-sm text-gray-900 bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
                         href="../docs/Invitation_KIT_Graduate_School_2025.pdf" target="_blank">
                         <span class="text-sm">Flyer</span>
                         <svg class="w-3 h-3 fill-current text-kitcyan-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -310,8 +367,8 @@
                   <!-- Image -->
                   <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 rtl"
                     data-aos="fade-up">
-                    <img class="max-w-full mx-auto md:max-w-none h-auto" src="../images/application-2.png" width="540"
-                      height="405" alt="Features 02" />
+                    <img class="max-w-full mx-auto md:max-w-none h-auto" src="../images/application-documents.jpg" width="540"
+                      height="405" alt="Winter School application documents" />
                   </div>
                   <!-- Content -->
                   <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
@@ -321,7 +378,7 @@
                       <p class="text-xl text-gray-400 mb-4">
                         The KIT Graduate School UpGrade Mobility invites all interested Ph.D. students from the field of
                         mobility to the Winter School. The Winter School provides 10 places for international guests,
-                        sponsoring accomodation and
+                        sponsoring accommodation and
                         meals. Each participant must finance travel to the conference venue
                         in Karlsruhe on their own. Please attach the following information to your
                         application:
@@ -365,7 +422,7 @@
                         Currently the application process is closed.
                       </p> -->
                       <!-- Hide the "Apply now" button -->
-                      <a class="btn-sm text-white bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
+                      <a class="btn-sm text-gray-900 bg-kitcyan-950 hover:bg-kitcyan-700 mt-6"
                         href="mailto:upgrademobility@kit.edu?subject=[Winter School] Application">
                         <span class="text-sm">Apply now</span>
                         <svg class="w-3 h-3 fill-current text-kitcyan-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -389,7 +446,7 @@
               <div class="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h2 class="h2 mb-4">Past Editions</h2>
                 <p class="text-xl text-gray-400">
-                  The UpGrade Mobility Winter School exists since 2022.
+                  The UpGrade Mobility Winter School has existed since 2022.
                 </p>
               </div>
 
@@ -410,16 +467,15 @@
                       <div
                         class="absolute left-0 w-2 h-2 bg-kitcyan-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
                         aria-hidden="true"></div>
-                      <h4 class="h4">Future of public transport</h4>
+                      <h3 class="h4">Future Public Transport</h3>
                     </div>
                     <p class="text-lg text-gray-400">
-                      From November 23 through 27, the fifth winter school will be dealing with the future of public
-                      transport
+                      From November 23 through 27, the fifth Winter School will focus on Future Public Transport.
                     </p>
 
                     <!-- Reference to the content of current edition -->
                     <!--
-                    <a class="btn-sm text-white bg-kitcyan-950 hover:bg-kitcyan-700 mt-6" href="#current-edition">
+                    <a class="btn-sm text-gray-900 bg-kitcyan-950 hover:bg-kitcyan-700 mt-6" href="#current-edition">
                       <span class="text-sm">Learn more</span>
                       <svg class="w-3 h-3 fill-current text-kitcyan-400 shrink-0 ml-2" viewBox="0 0 12 12"
                         xmlns="http://www.w3.org/2000/svg">
@@ -433,33 +489,32 @@
                 <!-- 2025-->
                 <div class="relative py-4 md:py-6 pl-24" data-aos="fade-up" data-aos-delay="200"
                   data-aos-anchor="[data-aos-id-timeline]">
-                  <div class="pl-2"></div>
-                  <div class="flex items-center mb-3">
-                    <div
-                      class="absolute left-0 inline-flex text-sm font-semibold py-1 px-3 text-white-600 bg-kitgreen-950 rounded-full">
-                      2025
+                  <div class="pl-2">
+                    <div class="flex items-center mb-3">
+                      <div
+                        class="absolute left-0 inline-flex text-sm font-semibold py-1 px-3 text-white-600 bg-kitgreen-950 rounded-full">
+                        2025
+                      </div>
+                      <div
+                        class="absolute left-0 h-full px-px bg-gray-800 ml-20 self-start transform -translate-x-1/2 translate-y-3"
+                        aria-hidden="true"></div>
+                      <div
+                        class="absolute left-0 w-2 h-2 bg-kitgreen-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
+                        aria-hidden="true"></div>
+                      <h3 class="h4">Future Commercial Vehicles</h3>
                     </div>
-                    <div
-                      class="absolute left-0 h-full px-px bg-gray-800 ml-20 self-start transform -translate-x-1/2 translate-y-3"
-                      aria-hidden="true"></div>
-                    <div
-                      class="absolute left-0 w-2 h-2 bg-kitgreen-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
-                      aria-hidden="true"></div>
-                    <h4 class="h4">Future Commercial Vehicles</h4>
+                    <p class="text-lg text-gray-400">
+                      From Dec 01 through 05, the fourth Winter School focused on commercial vehicles.
+                    </p>
+                    <a class="btn-sm text-gray-900 bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
+                      href="../news/2025-12-05.html">
+                      <span class="text-sm">Learn more</span>
+                      <svg class="w-3 h-3 fill-current text-kitgreen-400 shrink-0 ml-2" viewBox="0 0 12 12"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 5H0v2h6v4l6-5-6-5z" />
+                      </svg>
+                    </a>
                   </div>
-                  <p class="text-lg text-gray-400">
-                    From Dec 01 through 05, the fourth Winter School focused on commercial vehicles.
-                  </p>
-                  <!--
-                  <a class="btn-sm text-white bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
-                    href="../news/2024-11-30.html">
-                    <span class="text-sm">Learn more</span>
-                    <svg class="w-3 h-3 fill-current text-kitgreen-400 shrink-0 ml-2" viewBox="0 0 12 12"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path d="M6 5H0v2h6v4l6-5-6-5z" />
-                    </svg>
-                  </a>
-                  -->
                 </div>
 
                 <!-- 2024 - 2-->
@@ -477,13 +532,13 @@
                     <div
                       class="absolute left-0 w-2 h-2 bg-kitgreen-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
                       aria-hidden="true"></div>
-                    <h4 class="h4">Software-defined Mobility</h4>
+                    <h3 class="h4">Software-defined Mobility</h3>
                   </div>
                   <p class="text-lg text-gray-400">
                     From 25 to 29 November 2024, the third Winter School attracted PhD students from Hungary, Italy,
                     and Germany.
                   </p>
-                  <a class="btn-sm text-white bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
+                  <a class="btn-sm text-gray-900 bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
                     href="../news/2024-11-30.html">
                     <span class="text-sm">Learn more</span>
                     <svg class="w-3 h-3 fill-current text-kitgreen-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -508,14 +563,14 @@
                     <div
                       class="absolute left-0 w-2 h-2 bg-kitgreen-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
                       aria-hidden="true"></div>
-                    <h4 class="h4">Autonomous Public Transport Research</h4>
+                    <h3 class="h4">Autonomous Public Transport Research</h3>
                   </div>
                   <p class="text-lg text-gray-400">
                     From 13 to 16 February 2024, the second Winter School attracted
                     PhD students from all over Europe.
                   </p>
 
-                  <a class="btn-sm text-white bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
+                  <a class="btn-sm text-gray-900 bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
                     href="../news/2024-02-16.html">
                     <span class="text-sm">Learn more</span>
                     <svg class="w-3 h-3 fill-current text-kitgreen-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -537,13 +592,13 @@
                     <div
                       class="absolute left-0 w-2 h-2 bg-kitgreen-950 border-4 box-content border-gray-900 rounded-full ml-20 transform -translate-x-1/2"
                       aria-hidden="true"></div>
-                    <h4 class="h4">Interdisciplinary Mobility Research</h4>
+                    <h3 class="h4">Interdisciplinary Mobility Research</h3>
                   </div>
                   <p class="text-lg text-gray-400">
                     From 22 to 25 November 2022, the first Winter School
                     attracted PhD students from the United Kingdom and Germany.
                   </p>
-                  <a class="btn-sm text-white bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
+                  <a class="btn-sm text-gray-900 bg-kitgreen-950 hover:bg-kitgreen-700 mt-6"
                     href="../news/2022-11-30.html">
                     <span class="text-sm">Learn more</span>
                     <svg class="w-3 h-3 fill-current text-kitgreen-400 shrink-0 ml-2" viewBox="0 0 12 12"
@@ -559,48 +614,160 @@
       </main>
 
       <!-- Site footer -->
-      <script>
-        fetch("../shared/footer.html")
-          .then((response) => response.text())
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const footer = doc.getElementById("footer");
+      <footer id="footer">
+          <div class="py-12 md:py-16">
+              <div class="max-w-6xl mx-auto px-4 sm:px-6">
 
-            // Append the footer to the body of the destination document
-            document.body.appendChild(footer);
-          });
-      </script>
-    </div>
+                  <!-- Top area: Blocks -->
+                  <div class="grid md:grid-cols-12 gap-8 lg:gap-20 mb-8 md:mb-12">
 
+                      <!-- 1st block -->
+                      <div class="md:col-span-4 lg:col-span-5">
+
+                          <div class="text-gray-400">Funded by the Federal Ministry of Education and Research (BMBF)
+                              and the Baden-Württemberg Ministry of Science as part of the Excellence Strategy of the
+                              German Federal and State Governments.</div>
+                      </div>
+
+                      <!-- 2nd, 3rd and 4th blocks -->
+                      <div class="md:col-span-8 lg:col-span-7 grid grid-cols-2 gap-8">
+
+                          <!-- 2nd block -->
+                          <div class="text-sm">
+                              <h2 class="footer-heading">Imprint</h2>
+                              <ul>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.kit.edu/english/" target="_blank"
+                                          rel="noopener noreferrer">Home</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.mobilitaetssysteme.kit.edu/legals.php" target="_blank"
+                                          rel="noopener noreferrer">Imprint</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="/pages/privacy-policy.html">Privacy
+                                          Policy</a>
+                                  </li>
+                              </ul>
+                          </div>
+
+                          <!-- 4th block -->
+                          <div class="text-sm">
+                              <h2 class="footer-heading">Mobility Projects</h2>
+                              <ul>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.mobilitaetssysteme.kit.edu/" target="_blank"
+                                          rel="noopener noreferrer">Mobility Systems Center
+                                      </a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.icm-bw.de/en/" target="_blank"
+                                          rel="noopener noreferrer">Innovation
+                                          Campus Future Mobility</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://www.kamo.one/en/welcome/" target="_blank"
+                                          rel="noopener noreferrer">Karlsruhe Mobility HPC</a>
+                                  </li>
+                                  <li class="mb-1">
+                                      <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                          href="https://taf-bw.de/en/" target="_blank" rel="noopener noreferrer">Test
+                                          Area Autonomous Driving BW
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Bottom area -->
+                  <div class="md:flex md:items-center md:justify-between">
+                      <!-- Social links -->
+                      <ul class="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+                          <li>
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://linkedin.com/company/upgrade-mobility-grad-kit" target="_blank"
+                                  rel="noopener noreferrer" aria-label="LinkedIn">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path
+                                          d="M23.3 8H8.7c-.4 0-.7.3-.7.7v14.7c0 .3.3.6.7.6h14.7c.4 0 .7-.3.7-.7V8.7c-.1-.4-.4-.7-.8-.7zM12.7 21.6h-2.3V14h2.4v7.6h-.1zM11.6 13c-.8 0-1.4-.7-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4-.1.7-.7 1.4-1.4 1.4zm10 8.6h-2.4v-3.7c0-.9 0-2-1.2-2s-1.4 1-1.4 2v3.8h-2.4V14h2.3v1c.3-.6 1.1-1.2 2.2-1.2 2.4 0 2.8 1.6 2.8 3.6v4.2h.1z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://x.com/KITKarlsruhe" target="_blank" rel="noopener noreferrer"
+                                  aria-label="X">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path
+                                          d="m13.063 9 3.495 4.475L20.601 9h2.454l-5.359 5.931L24 23h-4.938l-3.866-4.893L10.771 23H8.316l5.735-6.342L8 9h5.063Zm-.74 1.347h-1.457l8.875 11.232h1.36l-8.778-11.232Z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://www.instagram.com/kitkarlsruhe/" target="_blank" rel="noopener noreferrer"
+                                  aria-label="Instagram">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <circle cx="20.145" cy="11.892" r="1" />
+                                      <path
+                                          d="M16 20c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm0-6c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z" />
+                                      <path
+                                          d="M20 24h-8c-2.056 0-4-1.944-4-4v-8c0-2.056 1.944-4 4-4h8c2.056 0 4 1.944 4 4v8c0 2.056-1.944 4-4 4zm-8-14c-.935 0-2 1.065-2 2v8c0 .953 1.047 2 2 2h8c.935 0 2-1.065 2-2v-8c0-.935-1.065-2-2-2h-8z" />
+                                  </svg>
+                              </a>
+                          </li>
+                          <li class="ml-4">
+                              <a class="flex justify-center items-center text-kitgreen-600 bg-gray-800 hover:text-gray-900 hover:bg-kitgreen-600 rounded-full transition duration-150 ease-in-out"
+                                  href="https://www.youtube.com/user/KITVideoclips" target="_blank" rel="noopener noreferrer"
+                                  aria-label="YouTube">
+                                  <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                      <path transform="translate(8,8)"
+                                          d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                                  </svg>
+                              </a>
+                          </li>
+                      </ul>
+
+                      <!-- Copyrights note -->
+                      <div class="text-gray-400 text-sm mr-4">KIT – The Research University in the Helmholtz
+                          Association.
+                      </div>
+
+                  </div>
+
+              </div>
+          </div>
+      </footer>
+</div>
+
+    <script src="../js/vendors/aos.js" defer></script>
+    <script src="../js/main.js" defer></script>
     <script src="../js/vendors/alpinejs.min.js" defer></script>
-    <script src="../js/vendors/aos.js"></script>
-    <script src="../js/vendors/jquery.min.js"></script>
-    <script src="../js/main.js"></script>
 
-    <script>
-      (function ($) {
-        $("a[href^=mailto]").each(function () {
-          var href = $(this).attr("href");
-          $(this).click(function () {
-            var t;
-            var self = $(this);
-
-            $(window).blur(function () {
-              // The browser apparently responded, so stop the timeout.
-              clearTimeout(t);
-            });
-
-            t = setTimeout(function () {
-              // The browser did not respond after 500ms, so open an alternative URL.
-              // document.location.href = 'https://www.fast.kit.edu/lff/Team_10658.php';
-              alert(
-                "No email client was detected. Please apply via upgrademobility@kit.edu."
-              );
-            }, 1000);
-          });
+<script>
+      document.querySelectorAll('a[href^="mailto"]').forEach(function (link) {
+        link.addEventListener('click', function () {
+          var timer;
+          var onBlur = function () {
+            clearTimeout(timer);
+            window.removeEventListener('blur', onBlur);
+          };
+          window.addEventListener('blur', onBlur);
+          timer = setTimeout(function () {
+            window.removeEventListener('blur', onBlur);
+            alert(
+              'No email client was detected. Please apply via upgrademobility@kit.edu.'
+            );
+          }, 1000);
         });
-      })(jQuery);
+      });
     </script>
   </body>
 
