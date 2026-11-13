@@ -10,6 +10,10 @@ Bootstrap Icons: https://icons.getbootstrap.com/
 Nucleo Icons: https://nucleoapp.com/free-icons    
 KIT Colors: https://raw.githubusercontent.com/camminady/kitcolors/master/example.png
 
+## Preview locally
+
+The pages use root-relative paths (`/images/...`), so opening the HTML files directly (`file://`) breaks images and links. Double-click `start-local.bat` (Windows, needs Python) — it starts a local server and opens http://localhost:8000/index.html. Close the window to stop it. Alternatively run `python -m http.server 8000` in the repo folder.
+
 ## Site structure
 
 | What | Where |

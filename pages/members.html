@@ -43,9 +43,17 @@
             <!-- Desktop navigation -->
             <nav class="hidden md:flex md:grow">
               <ul class="flex grow justify-center flex-wrap items-center">
-                <li>
-                  <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
-                    href="/index.html">About</a>
+                <li class="nav-mega">
+                  <a class="nav-mega-trigger text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                    href="/index.html#about" aria-haspopup="true">About</a>
+                  <div class="nav-mega-panel">
+                    <ul class="nav-mega-grid">
+                      <li><a class="nav-mega-link" href="/pages/principal-investigators.html">Principal Investigators</a></li>
+                      <li><a class="nav-mega-link" href="/pages/members.html#administration">Administration</a></li>
+                      <li><a class="nav-mega-link" href="/index.html#about">The Graduate School</a></li>
+                      <li><a class="nav-mega-link" href="/index.html#topics">Scientific Profile</a></li>
+                    </ul>
+                  </div>
                 </li>
                 <li>
                   <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
@@ -90,7 +98,13 @@
                 @click.outside="expanded = false" @keydown.escape.window="expanded = false" x-cloak>
                 <ul class="bg-gray-800 px-4 py-2">
                   <li>
-                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html">About</a>
+                    <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html#about">About</a>
+                    <ul class="pb-2">
+                      <li><a class="flex text-gray-400 hover:text-gray-200 py-1 pl-4" href="/pages/principal-investigators.html">Principal Investigators</a></li>
+                      <li><a class="flex text-gray-400 hover:text-gray-200 py-1 pl-4" href="/pages/members.html#administration">Administration</a></li>
+                      <li><a class="flex text-gray-400 hover:text-gray-200 py-1 pl-4" href="/index.html#about">The Graduate School</a></li>
+                      <li><a class="flex text-gray-400 hover:text-gray-200 py-1 pl-4" href="/index.html#topics">Scientific Profile</a></li>
+                    </ul>
                   </li>
                   <li>
                     <a class="flex text-gray-300 hover:text-gray-200 py-2" href="/index.html#news">News</a>
@@ -142,7 +156,7 @@
         </section>
 
         <!-- Team -->
-        <section>
+        <section id="administration">
           <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="py-12 md:py-20 border-t border-gray-800">
               <!-- Section header -->
